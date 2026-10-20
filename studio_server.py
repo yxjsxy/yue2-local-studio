@@ -1,5 +1,6 @@
 """Loopback-only YuE2 studio. One real subprocess at a time; no shell execution."""
 import argparse
+import fcntl
 import json
 import mimetypes
 import os
@@ -14,7 +15,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
-DATA = ROOT / "studio-data"
+DATA = (ROOT / os.environ.get("YUE2_STUDIO_DATA_DIR", "studio-data")).resolve()
+if DATA.parent != ROOT.resolve():
+    raise ValueError("Studio data must be a direct child directory of the project")
 DATA.mkdir(exist_ok=True)
 TOKEN = secrets.token_urlsafe(32)
 LOCK = threading.RLock()
@@ -49,17 +52,48 @@ def validate(body):
     if not isinstance(body, dict):
         raise ValueError("输入必须是对象。")
     lyrics, style = body.get("lyrics"), body.get("style")
-    if not isinstance(lyrics, str) or not 1 <= len(lyrics.strip()) <= 160:
-        raise ValueError("歌词需为1至160个字符，建议先写2至6行。")
-    if not isinstance(style, str) or not 1 <= len(style.strip()) <= 400:
-        raise ValueError("请填写1至400个字符的音乐风格。")
+    if not isinstance(lyrics, str) or not 1 <= len(lyrics.strip()) <= 4000:
+        raise ValueError("歌词需为1至4000个字符；完整歌曲请填写分段歌词。")
+    if not isinstance(style, str) or not 1 <= len(style.strip()) <= 1000:
+        raise ValueError("请填写1至1000个字符的音乐风格。")
     mode = body.get("mode", "full")
-    if mode not in ("full", "off"):
-        raise ValueError("请选择歌曲或说唱。")
+    if mode not in ("full", "melody", "off"):
+        raise ValueError("请选择曲谱规划、旋律规划或直接生成。")
     seed = body.get("seed", 42)
     if type(seed) is not int or not 0 <= seed <= 2147483647:
         raise ValueError("随机种子需为0至2147483647的整数。")
     return dict(lyrics=lyrics.strip(), style=style.strip(), cot=mode, seed=seed)
+
+
+def validate_options(body):
+    target = body.get("target_seconds", 0)
+    budget = body.get("max_audio_seconds", 360)
+    score = body.get("max_abc_tokens", 4096)
+    timeout = body.get("timeout_minutes", 60)
+    if type(target) is not int or target not in (0, 60, 120, 180, 210, 240):
+        raise ValueError("请选择有效的目标时长。")
+    if type(budget) is not int or not 48 <= budget <= 360:
+        raise ValueError("生成预算上限需为48至360秒（模型默认360秒）。")
+    if target and budget < target + 15:
+        raise ValueError("生成预算需比目标时长至少多15秒，为自然结尾留余量。")
+    if type(score) is not int or not 4096 <= score <= 8192:
+        raise ValueError("曲谱预算需为4096至8192。")
+    if type(timeout) is not int or not 10 <= timeout <= 120:
+        raise ValueError("运行保护时限需为10至120分钟。")
+    return dict(target_seconds=target, max_audio_seconds=budget,
+                max_abc_tokens=score, timeout_minutes=timeout)
+
+
+def external_busy():
+    path = ROOT / "evidence/inference.lock"
+    path.parent.mkdir(exist_ok=True)
+    with path.open("a") as handle:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return True
+        fcntl.flock(handle, fcntl.LOCK_UN)
+    return False
 
 
 def run_job(job):
@@ -67,10 +101,14 @@ def run_job(job):
     folder = DATA / job["id"]
     request_path = folder / "input.json"
     output = folder / "output"
+    options = job.get("options", validate_options({}))
+    timeout = options["timeout_minutes"] * 60
     cmd = [str(ROOT / ".venv/bin/python"), "-u", str(ROOT / "run_song.py"),
            "--request", str(request_path.relative_to(ROOT)),
-           "--output", str(output.relative_to(ROOT)), "--max-seconds", "1200",
-           "--max-semantic-tokens", "1200"]
+           "--output", str(output.relative_to(ROOT)), "--max-seconds", str(timeout),
+           "--max-semantic-tokens", str(options["max_audio_seconds"] * 25),
+           "--max-abc-tokens", str(options["max_abc_tokens"]),
+           "--target-seconds", str(options["target_seconds"])]
     started = time.monotonic()
     proc = None
     try:
@@ -89,7 +127,7 @@ def run_job(job):
             while proc.poll() is None:
                 with LOCK:
                     cancel = job.get("cancel_requested") or STOPPING
-                if cancel or time.monotonic() - started > 1230:
+                if cancel or time.monotonic() - started > timeout + 30:
                     os.killpg(proc.pid, signal.SIGTERM)
                     try:
                         proc.wait(timeout=5)
@@ -98,7 +136,7 @@ def run_job(job):
                         proc.wait()
                     with LOCK:
                         job.update(status="cancelled" if cancel else "failed",
-                                   error=None if cancel else "超过20分钟运行上限，已停止。")
+                                   error=None if cancel else f"超过{options['timeout_minutes']}分钟运行保护时限，已停止并保留阶段结果。")
                     break
                 time.sleep(0.5)
             with LOCK:
@@ -115,7 +153,7 @@ def run_job(job):
                         if (output / "failure.json").exists():
                             failure = json.loads((output / "failure.json").read_text())
                             message += failure.get("message", "")[:600]
-                        job.update(status="failed", error=message + " 可减少歌词长度后重试。")
+                        job.update(status="failed", error=message + " 已保留阶段结果；请根据错误调整设置后重试。")
                 job.update(finished_at=time.time(), exit_code=proc.returncode)
                 persist(job)
     except Exception as exc:
@@ -140,6 +178,11 @@ def public(job):
         progress = json.loads((output / "progress.json").read_text())
         result["stage"] = progress[-1]["stage"]
     except (OSError, ValueError, IndexError):
+        pass
+    try:
+        inspection = json.loads((output / "score-inspection.txt").read_text())
+        result["plan_nominal_seconds"] = inspection.get("nominal_duration_seconds")
+    except (OSError, ValueError):
         pass
     # Log messages reflect real native synthesis progress; do not invent percentages.
     try:
@@ -215,7 +258,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.file(ROOT / "studio-ui" / ({"": "index.html", "/": "index.html"}.get(path, path[1:])))
         if path == "/api/state":
             with LOCK:
-                return self.reply(200, {"token": TOKEN, "active": ACTIVE,
+                return self.reply(200, {"token": TOKEN, "active": ACTIVE, "external_busy": external_busy(),
+                                       "limits": {"lyrics":4000,"style":1000,"max_audio_seconds":360},
                                        "jobs": [public(j) for j in sorted(JOBS.values(), key=lambda j: j["created_at"], reverse=True)][:40]})
         m = re.fullmatch(r"/media/([a-f0-9]{16})/(audio\.flac|score\.abc)", path)
         if m and m[1] in JOBS and JOBS[m[1]]["status"] in {"completed", "partial"}:
@@ -230,21 +274,25 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(403, {"error": "页面验证失效，请刷新页面再试。"})
         try:
             size = int(self.headers.get("Content-Length", "0"))
-            if not 0 < size <= 8192:
+            if not 0 < size <= 32768:
                 raise ValueError("请求大小不符合要求。")
             body = json.loads(self.rfile.read(size))
             path = urlparse(self.path).path
             if path == "/api/jobs":
                 req = validate(body)
+                options = validate_options(body)
+                user_style = req["style"]
+                if options["target_seconds"]:
+                    req["style"] += f", complete song approximately {options['target_seconds']} seconds, continuous musical development, recurring chorus melody, natural resolved ending"
                 with LOCK:
-                    if ACTIVE:
+                    if ACTIVE or external_busy():
                         return self.reply(409, {"error": "已有一首正在生成，请等待或先取消。"})
                     job_id = secrets.token_hex(8)
                     folder = DATA / job_id
                     folder.mkdir()
                     req["id"] = job_id
                     (folder / "input.json").write_text(json.dumps(req, ensure_ascii=False, indent=2))
-                    job = dict(id=job_id, status="queued", created_at=time.time(), request=req)
+                    job = dict(id=job_id, status="queued", created_at=time.time(), request=req, options=options, user_style=user_style)
                     JOBS[job_id] = job
                     ACTIVE = job_id
                     persist(job)

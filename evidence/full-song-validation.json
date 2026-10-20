@@ -1,0 +1,218 @@
+{
+  "verified_on": "2026-10-21 Asia/Shanghai",
+  "hardware": "Apple M4 Pro, 24 GiB unified memory",
+  "runs": [
+    {
+      "job_id": "6e71be35a1da8299",
+      "request": {
+        "lyrics": "[Verse 1]\n晚风翻过安静的街巷\n路灯照着归途的方向\n我把白天没说完的话\n轻轻放进口袋里收藏\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Verse 2]\n地铁穿过城市的灯光\n窗外有人赶着去远方\n那些曾经走散的愿望\n仍在心里慢慢地生长\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Bridge]\n如果夜色暂时遮住方向\n就让星光落在你的肩上\n我们不必追赶每次散场\n慢一点也会抵达心中远方\n\n[Final Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响",
+        "style": "Mandarin Chinese, warm male baritone vocal, acoustic folk pop ballad, acoustic guitar, soft piano and restrained drums, 108 BPM, 4/4 meter, flowing verses and recurring chorus melody, brief instrumental introduction and natural resolved outro, clear diction, complete song approximately 180 seconds, continuous musical development, recurring chorus melody, natural resolved ending",
+        "cot": "full",
+        "seed": 42,
+        "id": "6e71be35a1da8299"
+      },
+      "options": {
+        "target_seconds": 180,
+        "max_audio_seconds": 360,
+        "max_abc_tokens": 4096,
+        "timeout_minutes": 60
+      },
+      "user_style": "Mandarin Chinese, warm male baritone vocal, acoustic folk pop ballad, acoustic guitar, soft piano and restrained drums, 108 BPM, 4/4 meter, flowing verses and recurring chorus melody, brief instrumental introduction and natural resolved outro, clear diction",
+      "metrics": {
+        "duration_seconds": 199.07866666666666,
+        "sample_rate": 48000,
+        "channels": 2,
+        "finite": true,
+        "peak": 0.9743425250053406,
+        "rms": 0.1441656317535984,
+        "truncated": {
+          "abc": false,
+          "semantic": false
+        },
+        "measured_e2e_seconds": 1509.6963319778442,
+        "max_sampled_rss_bytes": 4015243264,
+        "max_sampled_mps_driver_bytes": 14965080064,
+        "target_seconds": 180,
+        "target_delta_seconds": 19.078666666666663,
+        "duration_target_met": false,
+        "three_to_four_minutes": true,
+        "semantic_calls": 1,
+        "acoustic_chunks": 1,
+        "quality_note": "Signal and continuous-generation checks only; no human listening or ASR quality claim."
+      },
+      "timing": {
+        "abc": {
+          "seconds": 95.20412208279595,
+          "prefill_seconds": 1.3158542909659445,
+          "ttft_seconds": 1.3781162910163403,
+          "output_tokens": 1837,
+          "content_tokens": 1836,
+          "output_tps": 19.295383012958414,
+          "prefix_tokens": 410,
+          "cfg_branches": 1,
+          "execution": "eager",
+          "attention": "sdpa"
+        },
+        "semantic": {
+          "seconds": 582.3086053337902,
+          "prefill_seconds": 2.0203463747166097,
+          "ttft_seconds": 2.0394225837662816,
+          "output_tokens": 4978,
+          "content_tokens": 4977,
+          "output_tps": 8.548731642299048,
+          "prefix_tokens": 2248,
+          "cfg_branches": 1,
+          "execution": "eager",
+          "attention": "sdpa"
+        },
+        "nar_seconds": 787.239775291644,
+        "vae_seconds": 33.707807624712586,
+        "load": {
+          "resolve_and_integrity_seconds": 3.2163668340072036,
+          "mot_load_seconds": 0.18527266616001725
+        },
+        "e2e_seconds": 1509.1674699783325
+      },
+      "continuity": {
+        "semantic_calls": 1,
+        "semantic_tokens": 4977,
+        "prefix_tokens": 2248,
+        "acoustic_chunks": [
+          [
+            0,
+            4977
+          ]
+        ],
+        "postprocessing": "none"
+      },
+      "identity": "77c9f204c8850d5cdf16c96d118cf40db267344f203d701ab2e1a96232fe1aa5",
+      "audio_sha256": "89bcfdf287cb2fdf55583461a617b9acd406947af7dd738cc5aa3616a9826be1",
+      "artifact_manifest_verified": true,
+      "flac_independent_decode_verified": true,
+      "http_range_verified": true,
+      "first_run_manifest_finalized_after_metrics": false,
+      "listening_verified": false
+    },
+    {
+      "job_id": "f68e003f77c1ef6c",
+      "request": {
+        "lyrics": "[Verse 1]\n晚风翻过安静的街巷\n路灯照着归途的方向\n我把白天没说完的话\n轻轻放进口袋里收藏\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Verse 2]\n地铁穿过城市的灯光\n窗外有人赶着去远方\n那些曾经走散的愿望\n仍在心里慢慢地生长\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Verse 3]\n旧唱片里旋转着过往\n有些遗憾学会轻轻放\n我把名字写在新的纸上\n重新出发也不需要逞强\n\n[Bridge]\n如果夜色暂时遮住方向\n就让星光落在你的肩上\n我们不必追赶每次散场\n慢一点也会抵达心中远方\n\n[Verse 4]\n清晨会把窗帘轻轻照亮\n街角面包传来熟悉的香\n昨天眼泪变成今天力量\n每个平凡日子值得珍藏\n\n[Final Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响",
+        "style": "Mandarin Chinese, warm male baritone vocal, acoustic folk pop ballad, acoustic guitar, soft piano and restrained drums, 88 BPM, 4/4 meter, complete song approximately 240 seconds, flowing verses and recurring chorus melody, brief instrumental introduction and natural resolved outro, clear diction, complete song approximately 240 seconds, continuous musical development, recurring chorus melody, natural resolved ending",
+        "cot": "full",
+        "seed": 831001,
+        "id": "f68e003f77c1ef6c"
+      },
+      "options": {
+        "target_seconds": 240,
+        "max_audio_seconds": 360,
+        "max_abc_tokens": 4096,
+        "timeout_minutes": 60
+      },
+      "user_style": "Mandarin Chinese, warm male baritone vocal, acoustic folk pop ballad, acoustic guitar, soft piano and restrained drums, 88 BPM, 4/4 meter, complete song approximately 240 seconds, flowing verses and recurring chorus melody, brief instrumental introduction and natural resolved outro, clear diction",
+      "metrics": {
+        "duration_seconds": 279.39866666666666,
+        "sample_rate": 48000,
+        "channels": 2,
+        "finite": true,
+        "peak": 0.9736310243606567,
+        "rms": 0.1286033002761973,
+        "truncated": {
+          "abc": false,
+          "semantic": false
+        },
+        "measured_e2e_seconds": 2425.210638999939,
+        "max_sampled_rss_bytes": 3172122624,
+        "max_sampled_mps_driver_bytes": 14965080064,
+        "target_seconds": 240,
+        "target_delta_seconds": 39.39866666666666,
+        "duration_target_met": false,
+        "three_to_four_minutes": false,
+        "semantic_calls": 1,
+        "acoustic_chunks": 1,
+        "quality_note": "Signal and continuous-generation checks only; no human listening or ASR quality claim."
+      },
+      "timing": {
+        "abc": {
+          "seconds": 142.68359679123387,
+          "prefill_seconds": 1.615399916190654,
+          "ttft_seconds": 1.6524839578196406,
+          "output_tokens": 2406,
+          "content_tokens": 2405,
+          "output_tps": 16.86248492544182,
+          "prefix_tokens": 482,
+          "cfg_branches": 1,
+          "execution": "eager",
+          "attention": "sdpa"
+        },
+        "semantic": {
+          "seconds": 988.6599485836923,
+          "prefill_seconds": 2.771776999812573,
+          "ttft_seconds": 2.785483291838318,
+          "output_tokens": 6986,
+          "content_tokens": 6985,
+          "output_tps": 7.066130280697438,
+          "prefix_tokens": 2889,
+          "cfg_branches": 1,
+          "execution": "eager",
+          "attention": "sdpa"
+        },
+        "nar_seconds": 1246.5716027081944,
+        "vae_seconds": 35.212511292193085,
+        "load": {
+          "resolve_and_integrity_seconds": 3.2457617092877626,
+          "mot_load_seconds": 0.19888579100370407
+        },
+        "e2e_seconds": 2424.5395889282227
+      },
+      "continuity": {
+        "semantic_calls": 1,
+        "semantic_tokens": 6985,
+        "prefix_tokens": 2889,
+        "acoustic_chunks": [
+          [
+            0,
+            6985
+          ]
+        ],
+        "postprocessing": "none"
+      },
+      "identity": "2a9c6be7cdc3b0c76349415d61cbc5d629b92c4a09ef853142302ad1d1045d4c",
+      "audio_sha256": "60943f475919a14684cbad961d69aac0647801dd84f7784e415dcee5a28a8687",
+      "artifact_manifest_verified": true,
+      "flac_independent_decode_verified": true,
+      "http_range_verified": true,
+      "first_run_manifest_finalized_after_metrics": true,
+      "listening_verified": false
+    }
+  ],
+  "other_attempts": [
+    {
+      "id": "continuous-120",
+      "status": "failed",
+      "reason": "Native MPS sampling produced non-finite probabilities; generated score also failed structural inspection; no audio."
+    },
+    {
+      "id": "c2fb84ba46eb5f64",
+      "status": "cancelled",
+      "reason": "Cancelled from UI; not a model failure or success."
+    }
+  ],
+  "checks": {
+    "unit_tests_passed": 4,
+    "cpu_mps_attention_parity_and_long_key_finite": "passed",
+    "human_listening": "not performed",
+    "asr_lyrics_verification": "not performed"
+  },
+  "restrictions": {
+    "lyrics_characters": 4000,
+    "native_default_semantic_tokens": 9000,
+    "audio_budget_seconds": 360,
+    "score_tokens_default": 4096,
+    "score_tokens_max": 8192,
+    "timeout_minutes_default": 60,
+    "timeout_minutes_max": 120,
+    "single_model_process": true,
+    "exact_duration_guaranteed": false,
+    "all_boundary_inputs_tested": false
+  }
+}

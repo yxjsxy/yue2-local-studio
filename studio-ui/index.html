@@ -4,19 +4,19 @@
 <body>
 <header><a class="brand" href="/">YuE2 <span>我的音乐工作台</span></a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener">听原始复现样例</a></header>
 <main>
-<section class="intro"><h1>把你写的词，唱出来。</h1><p>写几句歌词，描述你想听到的声音。YuE2 会在这台 Mac 上创作人声和伴奏。</p></section>
+<section class="intro"><h1>把你写的词，唱出来。</h1><p>写下完整歌词，描述你想听到的声音。YuE2 会在这台 Mac 上创作人声和伴奏。</p></section>
 <div class="workspace">
 <section class="composer"><form id="song-form">
-<div class="section-head"><h2>创作一首短歌</h2><button class="quiet" type="button" id="example">填入示例</button></div>
-<label for="lyrics">歌词 <span id="count">0 / 160</span></label>
-<textarea id="lyrics" name="lyrics" maxlength="160" required rows="7" placeholder="写下想唱出来的话，建议先试 2–6 行。"></textarea>
-<div class="row"><div><label for="mode">创作方式</label><select id="mode"><option value="full">歌曲 · 先写曲谱再演唱</option><option value="off">说唱 · 直接生成音频</option></select></div><div><label for="preset">风格起点</label><select id="preset"><option value="folk">温柔民谣</option><option value="jazz">轻松爵士</option><option value="rap">中文说唱</option><option value="pop">明亮流行</option></select></div></div>
-<label for="style">音乐风格</label><textarea id="style" name="style" required maxlength="400" rows="3"></textarea>
-<p class="hint">可以写语言、男女声、乐器、情绪和速度。中文或英文都可以。</p>
-<details><summary>更多设置</summary><label for="seed">随机种子</label><input id="seed" type="number" min="0" max="2147483647" value="42" required><p class="hint">保留同一个数方便比较；换一个数可以尝试新的演绎。</p></details>
+<div class="section-head"><h2>创作你的歌曲</h2><button class="quiet" type="button" id="example">填入完整歌词示例</button></div>
+<label for="lyrics">歌词 <span id="count">0 / 4000</span></label>
+<textarea id="lyrics" name="lyrics" maxlength="4000" required rows="13" placeholder="用 [Verse 1]、[Chorus]、[Bridge] 等标签组织主歌、副歌和桥段。完整歌曲建议准备多段歌词。"></textarea>
+<label for="duration">目标时长</label><select id="duration"><option value="0">由完整歌词与模型决定</option><option value="60">约 1 分钟</option><option value="120">约 2 分钟</option><option value="180">约 3 分钟</option><option value="210" selected>约 3 分 30 秒</option><option value="240">约 4 分钟</option></select><p class="hint">一份完整歌词，一次连续生成。目标时长是创作引导，实际时长会单独显示。</p><div class="row"><div><label for="mode">创作方式</label><select id="mode"><option value="full">完整曲谱 · 旋律与和弦规划</option><option value="melody">旋律规划 · 自由伴奏</option><option value="off">直接生成 · 无曲谱（歌曲或说唱）</option></select></div><div><label for="preset">风格起点</label><select id="preset"><option value="folk">温柔民谣</option><option value="jazz">轻松爵士</option><option value="rap">中文说唱</option><option value="pop">明亮流行</option></select></div></div>
+<label for="style">音乐风格</label><textarea id="style" name="style" required maxlength="1000" rows="3"></textarea>
+<p class="hint">可以写语言、音色、乐器、情绪和速度。风格是引导条件，不能保证声线等要求逐项实现。</p>
+<details><summary>生成预算与运行保护</summary><label for="audio-budget">音频生成预算上限（秒）</label><input id="audio-budget" type="number" min="48" max="360" value="360" required><p class="hint">360秒对应模型默认预算，允许自然提前结束；这不是保证的歌曲时长。触及预算会明确标记截断。</p><label for="score-budget">曲谱预算</label><input id="score-budget" type="number" min="4096" max="8192" step="256" value="4096" required><label for="timeout">运行保护时限（分钟）</label><input id="timeout" type="number" min="10" max="120" value="60" required><label for="seed">随机种子</label><input id="seed" type="number" min="0" max="2147483647" value="42" required><p class="hint">保留同一个数方便比较；换一个数可以尝试新的演绎。</p></details>
 <div class="submit-row"><button id="generate" class="primary" type="submit">生成我的歌曲</button><span>本机运行 · 一次一首</span></div>
 <p id="form-error" role="alert"></p>
-<p class="limits">先体验短片段：生成上限约 48 秒，实际长度由模型决定。此前实测约需 2–3 分钟；内存紧张时可能更久，超过 20 分钟会停止。</p>
+<p class="limits">已开放完整歌词与模型默认生成预算。长歌用时随歌词、模型输出和内存压力变化；可随时取消。保留单任务、模型上下文及内存保护，不用循环、拼接或拉伸凑时长。</p>
 </form></section>
 <section class="listen"><div class="section-head"><h2>听听你的作品</h2><span id="connection">正在连接</span></div>
 <div id="empty"><div class="record" aria-hidden="true"><span></span></div><h3>下一首，从你的歌词开始</h3><p>生成后在这里试听、下载，或者把输入带回左边，再改一个版本。</p></div>
