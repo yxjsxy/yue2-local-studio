@@ -1,0 +1,9 @@
+{
+  "style": "Mandarin Chinese, warm intimate female vocal, relaxed jazz arrangement, 98 BPM, piano, upright bass, brushed drums, spacious acoustic sound",
+  "lyrics": "[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱",
+  "cot": "melody",
+  "seed": 42,
+  "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=98\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|f2a2a2f2a4b2a2-|a4f2e4dz4z|f2a2a2f2a4b2f2-|\nV: Ins\nZ4|\nV: Vocal\nf6z8z2|Z3|\nV: Ins\nz8z2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\nZ|\nV: Ins\ne16|\n% verse\nV: Vocal\nf2a2a2f2a4f2f2|fz12z3|B2B2d4d2e2f2f2-|f2z12z2|\nV: Ins\nZ4|\nV: Vocal\nB2B2d2B2d2a2b2a2-|a6e2d4z4|f2e2d2d4B2z4|Z|\nV: Ins\nZ4|\n",
+  "cfg_scale": null,
+  "id": "afternoon_jazz_cover"
+}

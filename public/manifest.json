@@ -1,0 +1,408 @@
+{
+  "schema": "yue2-listening-bundle-v1",
+  "cases": [
+    {
+      "label": "chinese-baseline",
+      "directory": "case-001",
+      "issues": [],
+      "files": {
+        "request.json": {
+          "sha256": "dca43cc91ed44460e3fff0cfb433c28ef005363406f734c485ce98d66c326430",
+          "bytes": 401
+        },
+        "config.json": {
+          "sha256": "a7935d4ca1ea90ae59bc9050485427a7dff4f46ebbaa9107345f1bda0e2c757a",
+          "bytes": 1484
+        },
+        "result.json": {
+          "sha256": "aeee07080c05cc9d95bc8dd20684670377d2fe31cb99ed60d7e1e4adfa62cc7f",
+          "bytes": 4390
+        },
+        "score.abc": {
+          "sha256": "b6290a29a587f5a4436a6cec8ea31230d8c1648482f0294729c0bfa5b09dc50c",
+          "bytes": 571
+        },
+        "audio.flac": {
+          "sha256": "65bf7b9365635faab8e5fb3007b887d7aa0847673b633a82c4413a9908df2b86",
+          "bytes": 6233604
+        }
+      },
+      "native_artifact_checks": {
+        "request.json": "passed",
+        "config.json": "passed",
+        "result.json": "not listed",
+        "score.abc": "passed",
+        "audio.flac": "passed"
+      },
+      "audio": "case-001/audio.flac",
+      "request": {
+        "style": "Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending",
+        "lyrics": "[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱",
+        "cot": "full",
+        "seed": 42,
+        "abc": null,
+        "cfg_scale": null,
+        "id": "afternoon_song"
+      },
+      "decoder_release": "standard",
+      "weights": {
+        "mot": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9",
+              "bytes": 7261441640
+            }
+          },
+          "config_sha256": "ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329"
+        },
+        "vae": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346",
+              "bytes": 530512720
+            }
+          },
+          "config_sha256": "f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970"
+        }
+      },
+      "identity": "361a761889ac889ab79211ff703f01e98a8d57b9c0f7f1f13832c557c23f1518",
+      "loader": {},
+      "native_status": "complete",
+      "truncated": {
+        "abc": false,
+        "semantic": false
+      },
+      "audio_seconds": 39.83866666666667,
+      "sample_rate": 48000,
+      "validation_status": "unvalidated",
+      "failure": {},
+      "abc_check": {},
+      "recorded_warnings": {},
+      "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=100\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|\"D\"z16|\"F#m7\"z16|\"Bm7\"z16|\nV: Ins\nZ|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|\nV: Vocal\n\"F#m7\"z16|\"Gmaj7\"z16|\"F#m7\"z8\"Bm7\"z8|\"Em7\"z16|\nV: Ins\nf8-f2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\n\"A\"z16|\nV: Ins\ne16|\n% verse\nV: Vocal\n\"D\"f2a2a2f2a4b2f2-|\"F#m7\"f4z12|\"Bm7\"B2d2d2B2d4e2f2-|\"F#m7\"f4z12|\nV: Ins\nZ4|\nV: Vocal\n\"Gmaj7\"B2d2d2B2d4b2a2-|\"F#m7\"a4\"Bm7\"e2d4z6|\"Em7\"g2f2g2f2d4B4|\"D\"d6z8z2|\nV: Ins\nZ4|\n",
+      "audio_type": "audio/flac",
+      "status": "complete"
+    },
+    {
+      "label": "chinese-rap",
+      "directory": "case-002",
+      "issues": [],
+      "files": {
+        "request.json": {
+          "sha256": "927de4aac6d32dc6b23c2bced95a8e62c04e49dd4b56ff217f0d9821acabbd56",
+          "bytes": 363
+        },
+        "config.json": {
+          "sha256": "56fdc82e5f27bb10fe323801edea2a90aa886dfb98d39825ef450ae9b829f5f3",
+          "bytes": 1470
+        },
+        "result.json": {
+          "sha256": "2ff4e711a693001e6fbbefdee2423ce2706b15818c460737f230046cdd31f3f1",
+          "bytes": 3790
+        },
+        "audio.flac": {
+          "sha256": "0a20f64a0886be8304d382ae0885030b6020b02a597cd66cbaba7758ca46dea1",
+          "bytes": 4381619
+        }
+      },
+      "native_artifact_checks": {
+        "request.json": "passed",
+        "config.json": "passed",
+        "result.json": "not listed",
+        "audio.flac": "passed"
+      },
+      "audio": "case-002/audio.flac",
+      "request": {
+        "style": "Mandarin Chinese rap, clear rhythmic male voice, relaxed upbeat hip-hop drums and warm bass, 96 BPM, short clean four-line verse",
+        "lyrics": "[Verse]\n小爽走来眼里有光\n难题来了也不慌张\n一句加油给人力量\n今天掌声为你响亮",
+        "cot": "off",
+        "seed": 42,
+        "abc": null,
+        "cfg_scale": null,
+        "id": "friendly_rap"
+      },
+      "decoder_release": "standard",
+      "weights": {
+        "mot": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9",
+              "bytes": 7261441640
+            }
+          },
+          "config_sha256": "ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329"
+        },
+        "vae": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346",
+              "bytes": 530512720
+            }
+          },
+          "config_sha256": "f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970"
+        }
+      },
+      "identity": "142bf261a998663a9ce561c1ce96ae1265cf4031bc213e219a9b05bca5f4fe69",
+      "loader": {},
+      "native_status": "complete",
+      "truncated": {
+        "abc": false,
+        "semantic": false
+      },
+      "audio_seconds": 22.758666666666667,
+      "sample_rate": 48000,
+      "validation_status": "unvalidated",
+      "failure": {},
+      "abc_check": {},
+      "recorded_warnings": {},
+      "audio_type": "audio/flac",
+      "status": "complete"
+    },
+    {
+      "label": "chinese-harmony",
+      "directory": "case-003",
+      "issues": [],
+      "files": {
+        "request.json": {
+          "sha256": "d1ce077fa696887426df0cb79dd2f616a214ecf87c6bbdd8a25f4727ce87f9dd",
+          "bytes": 1057
+        },
+        "config.json": {
+          "sha256": "a7935d4ca1ea90ae59bc9050485427a7dff4f46ebbaa9107345f1bda0e2c757a",
+          "bytes": 1484
+        },
+        "result.json": {
+          "sha256": "6e4b89090086c2bd9e82b5ceb8da6da533c27657af5833da35ee2b4afbe8f054",
+          "bytes": 4153
+        },
+        "score.abc": {
+          "sha256": "c9cb02ae61e11fa3d5bbc4cd9bad85397584e018fee2370b18f49e160f4ad43b",
+          "bytes": 581
+        },
+        "audio.flac": {
+          "sha256": "c0f41e4e6383446fdfa0f0628b3b59d34b351fbe608871bff20f41cb77c1d465",
+          "bytes": 6876579
+        }
+      },
+      "native_artifact_checks": {
+        "request.json": "passed",
+        "config.json": "passed",
+        "result.json": "not listed",
+        "score.abc": "passed",
+        "audio.flac": "passed"
+      },
+      "audio": "case-003/audio.flac",
+      "request": {
+        "style": "Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending",
+        "lyrics": "[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱",
+        "cot": "full",
+        "seed": 42,
+        "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=100\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|\"Dmaj7\"z16|\"F#m7\"z16|\"Bm7\"z16|\nV: Ins\nZ|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|\nV: Vocal\n\"F#m7\"z16|\"Gmaj7\"z16|\"F#m7\"z8\"Bm7\"z8|\"Em7\"z16|\nV: Ins\nf8-f2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\n\"A7\"z16|\nV: Ins\ne16|\n% verse\nV: Vocal\n\"Dmaj7\"f2a2a2f2a4b2f2-|\"F#m7\"f4z12|\"Bm7\"B2d2d2B2d4e2f2-|\"F#m7\"f4z12|\nV: Ins\nZ4|\nV: Vocal\n\"Gmaj7\"B2d2d2B2d4b2a2-|\"F#m7\"a4\"Bm7\"e2d4z6|\"Em7\"g2f2g2f2d4B4|\"D6\"d6z8z2|\nV: Ins\nZ4|\n",
+        "cfg_scale": null,
+        "id": "afternoon_harmony"
+      },
+      "decoder_release": "standard",
+      "weights": {
+        "mot": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9",
+              "bytes": 7261441640
+            }
+          },
+          "config_sha256": "ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329"
+        },
+        "vae": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346",
+              "bytes": 530512720
+            }
+          },
+          "config_sha256": "f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970"
+        }
+      },
+      "identity": "d14fb17571d4fe6c4e00b74f327cf95e53f4ee08790c168ede4c3cb0d10234ce",
+      "loader": {},
+      "native_status": "complete",
+      "truncated": {
+        "abc": false,
+        "semantic": false
+      },
+      "audio_seconds": 38.55866666666667,
+      "sample_rate": 48000,
+      "validation_status": "unvalidated",
+      "failure": {},
+      "abc_check": {},
+      "recorded_warnings": {},
+      "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=100\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|\"Dmaj7\"z16|\"F#m7\"z16|\"Bm7\"z16|\nV: Ins\nZ|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|\nV: Vocal\n\"F#m7\"z16|\"Gmaj7\"z16|\"F#m7\"z8\"Bm7\"z8|\"Em7\"z16|\nV: Ins\nf8-f2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\n\"A7\"z16|\nV: Ins\ne16|\n% verse\nV: Vocal\n\"Dmaj7\"f2a2a2f2a4b2f2-|\"F#m7\"f4z12|\"Bm7\"B2d2d2B2d4e2f2-|\"F#m7\"f4z12|\nV: Ins\nZ4|\nV: Vocal\n\"Gmaj7\"B2d2d2B2d4b2a2-|\"F#m7\"a4\"Bm7\"e2d4z6|\"Em7\"g2f2g2f2d4B4|\"D6\"d6z8z2|\nV: Ins\nZ4|\n",
+      "audio_type": "audio/flac",
+      "status": "complete"
+    },
+    {
+      "label": "chinese-jazz-cover-complete",
+      "directory": "case-004",
+      "issues": [],
+      "files": {
+        "request.json": {
+          "sha256": "527c3a1b1b0cf16860bacb69949e1bb32f62653b880c4955b90eab8c543bb451",
+          "bytes": 863
+        },
+        "config.json": {
+          "sha256": "ac59eb9d398aa1b8a1d4d9b6148525f8ec8e5f717b186ca9a35af8c3c0eea36e",
+          "bytes": 1486
+        },
+        "result.json": {
+          "sha256": "90cfed7a8255042023e6ca129534a0bfe9118e49e6e504873be6fd1c50ac02ca",
+          "bytes": 4149
+        },
+        "score.abc": {
+          "sha256": "d6c7d77620609ad705511560e055c5ff25ccfd28d326120909cc272752cc36bf",
+          "bytes": 454
+        },
+        "audio.flac": {
+          "sha256": "11f491ac65ebf3e027938f103f4cfee19c59c5d7fbe17eb33ad4e3238969ede8",
+          "bytes": 6827232
+        }
+      },
+      "native_artifact_checks": {
+        "request.json": "passed",
+        "config.json": "passed",
+        "result.json": "not listed",
+        "score.abc": "passed",
+        "audio.flac": "passed"
+      },
+      "audio": "case-004/audio.flac",
+      "request": {
+        "style": "Mandarin Chinese, warm intimate female vocal, relaxed jazz arrangement, 98 BPM, piano, upright bass, brushed drums, spacious acoustic sound",
+        "lyrics": "[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱",
+        "cot": "melody",
+        "seed": 42,
+        "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=98\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|f2a2a2f2a4b2a2-|a4f2e4dz4z|f2a2a2f2a4b2f2-|\nV: Ins\nZ4|\nV: Vocal\nf6z8z2|Z3|\nV: Ins\nz8z2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\nZ|\nV: Ins\ne16|\n% verse\nV: Vocal\nf2a2a2f2a4f2f2|fz12z3|B2B2d4d2e2f2f2-|f2z12z2|\nV: Ins\nZ4|\nV: Vocal\nB2B2d2B2d2a2b2a2-|a6e2d4z4|f2e2d2d4B2z4|Z|\nV: Ins\nZ4|\n",
+        "cfg_scale": null,
+        "id": "afternoon_jazz_cover"
+      },
+      "decoder_release": "standard",
+      "weights": {
+        "mot": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9",
+              "bytes": 7261441640
+            }
+          },
+          "config_sha256": "ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329"
+        },
+        "vae": {
+          "files": {
+            "model.safetensors": {
+              "sha256": "807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346",
+              "bytes": 530512720
+            }
+          },
+          "config_sha256": "f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970"
+        }
+      },
+      "identity": "a5be2b01e04c45ec555d2eb896e0c72cd076d8eef17779a83a5431965bfc397b",
+      "loader": {},
+      "native_status": "complete",
+      "truncated": {
+        "abc": false,
+        "semantic": false
+      },
+      "audio_seconds": 39.958666666666666,
+      "sample_rate": 48000,
+      "validation_status": "unvalidated",
+      "failure": {},
+      "abc_check": {},
+      "recorded_warnings": {},
+      "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=98\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|f2a2a2f2a4b2a2-|a4f2e4dz4z|f2a2a2f2a4b2f2-|\nV: Ins\nZ4|\nV: Vocal\nf6z8z2|Z3|\nV: Ins\nz8z2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\nZ|\nV: Ins\ne16|\n% verse\nV: Vocal\nf2a2a2f2a4f2f2|fz12z3|B2B2d4d2e2f2f2-|f2z12z2|\nV: Ins\nZ4|\nV: Vocal\nB2B2d2B2d2a2b2a2-|a6e2d4z4|f2e2d2d4B2z4|Z|\nV: Ins\nZ4|\n",
+      "audio_type": "audio/flac",
+      "status": "complete"
+    }
+  ],
+  "files": {
+    "case-001/audio.flac": {
+      "sha256": "65bf7b9365635faab8e5fb3007b887d7aa0847673b633a82c4413a9908df2b86",
+      "bytes": 6233604
+    },
+    "case-001/config.json": {
+      "sha256": "a7935d4ca1ea90ae59bc9050485427a7dff4f46ebbaa9107345f1bda0e2c757a",
+      "bytes": 1484
+    },
+    "case-001/request.json": {
+      "sha256": "dca43cc91ed44460e3fff0cfb433c28ef005363406f734c485ce98d66c326430",
+      "bytes": 401
+    },
+    "case-001/result.json": {
+      "sha256": "aeee07080c05cc9d95bc8dd20684670377d2fe31cb99ed60d7e1e4adfa62cc7f",
+      "bytes": 4390
+    },
+    "case-001/score.abc": {
+      "sha256": "b6290a29a587f5a4436a6cec8ea31230d8c1648482f0294729c0bfa5b09dc50c",
+      "bytes": 571
+    },
+    "case-002/audio.flac": {
+      "sha256": "0a20f64a0886be8304d382ae0885030b6020b02a597cd66cbaba7758ca46dea1",
+      "bytes": 4381619
+    },
+    "case-002/config.json": {
+      "sha256": "56fdc82e5f27bb10fe323801edea2a90aa886dfb98d39825ef450ae9b829f5f3",
+      "bytes": 1470
+    },
+    "case-002/request.json": {
+      "sha256": "927de4aac6d32dc6b23c2bced95a8e62c04e49dd4b56ff217f0d9821acabbd56",
+      "bytes": 363
+    },
+    "case-002/result.json": {
+      "sha256": "2ff4e711a693001e6fbbefdee2423ce2706b15818c460737f230046cdd31f3f1",
+      "bytes": 3790
+    },
+    "case-003/audio.flac": {
+      "sha256": "c0f41e4e6383446fdfa0f0628b3b59d34b351fbe608871bff20f41cb77c1d465",
+      "bytes": 6876579
+    },
+    "case-003/config.json": {
+      "sha256": "a7935d4ca1ea90ae59bc9050485427a7dff4f46ebbaa9107345f1bda0e2c757a",
+      "bytes": 1484
+    },
+    "case-003/request.json": {
+      "sha256": "d1ce077fa696887426df0cb79dd2f616a214ecf87c6bbdd8a25f4727ce87f9dd",
+      "bytes": 1057
+    },
+    "case-003/result.json": {
+      "sha256": "6e4b89090086c2bd9e82b5ceb8da6da533c27657af5833da35ee2b4afbe8f054",
+      "bytes": 4153
+    },
+    "case-003/score.abc": {
+      "sha256": "c9cb02ae61e11fa3d5bbc4cd9bad85397584e018fee2370b18f49e160f4ad43b",
+      "bytes": 581
+    },
+    "case-004/audio.flac": {
+      "sha256": "11f491ac65ebf3e027938f103f4cfee19c59c5d7fbe17eb33ad4e3238969ede8",
+      "bytes": 6827232
+    },
+    "case-004/config.json": {
+      "sha256": "ac59eb9d398aa1b8a1d4d9b6148525f8ec8e5f717b186ca9a35af8c3c0eea36e",
+      "bytes": 1486
+    },
+    "case-004/request.json": {
+      "sha256": "527c3a1b1b0cf16860bacb69949e1bb32f62653b880c4955b90eab8c543bb451",
+      "bytes": 863
+    },
+    "case-004/result.json": {
+      "sha256": "90cfed7a8255042023e6ca129534a0bfe9118e49e6e504873be6fd1c50ac02ca",
+      "bytes": 4149
+    },
+    "case-004/score.abc": {
+      "sha256": "d6c7d77620609ad705511560e055c5ff25ccfd28d326120909cc272752cc36bf",
+      "bytes": 454
+    },
+    "index.html": {
+      "sha256": "a194b3dc529e6a4a8ae4ecf3a82e9355b23f549b05a4d639e34a572dd0b38042",
+      "bytes": 17753
+    }
+  },
+  "hash_scope": "All copied files and index.html; manifest.json excludes its own recursive hash",
+  "network_access": false,
+  "weights_or_latents_copied": false
+}

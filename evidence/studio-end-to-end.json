@@ -1,0 +1,18 @@
+{
+  "job_id": "91c3bd940ff61944",
+  "status": "completed",
+  "input_source": "User edited lyrics and style directly in browser during end-to-end verification",
+  "duration_seconds": 24.638666666666666,
+  "sample_rate": 48000,
+  "channels": 2,
+  "truncated": {
+    "abc": false,
+    "semantic": false
+  },
+  "elapsed_seconds": 85,
+  "audio_http": 200,
+  "audio_sha256": "dfc3ae079ae89d77a0d9a0f692542c86eeb92f2d3cff344923b1837062ee6bf7",
+  "range_seek_test": "PASS",
+  "browser_result": "Complete, audio player and download links visible",
+  "quality": "No subjective listening claim"
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "case": "missing_token",
+    "http": 403,
+    "passed": true
+  },
+  {
+    "case": "empty_lyrics",
+    "http": 400,
+    "passed": true
+  },
+  {
+    "case": "concurrent_job",
+    "http": 409,
+    "passed": true
+  }
+]

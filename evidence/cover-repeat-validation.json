@@ -1,0 +1,9 @@
+{
+  "initial_cap": 1000,
+  "repeat_cap": 1200,
+  "initial_truncated": false,
+  "repeat_truncated": false,
+  "identical_audio_sha256": true,
+  "audio_sha256": "11f491ac65ebf3e027938f103f4cfee19c59c5d7fbe17eb33ad4e3238969ede8",
+  "correction": "Token count at cap was initially suspected truncation. Native flags and identical extended-cap output show natural completion."
+}

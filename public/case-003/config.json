@@ -1,0 +1,63 @@
+{
+  "generation": {
+    "abc": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "top_k": 30,
+      "repetition_penalty": 1.005,
+      "penalty_window": 100,
+      "min_tokens": 32,
+      "max_tokens": 1536
+    },
+    "semantic": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 100,
+      "repetition_penalty": 1.2,
+      "penalty_window": 50,
+      "min_tokens": 200,
+      "max_tokens": 1000
+    },
+    "ode_steps": 32,
+    "ode_method": "midpoint",
+    "context": 24576,
+    "version": "yue2-native-v1"
+  },
+  "overrides": {
+    "abc": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "top_k": 30,
+      "repetition_penalty": 1.005,
+      "penalty_window": 100,
+      "min_tokens": 32,
+      "max_tokens": 1536
+    },
+    "semantic": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 100,
+      "repetition_penalty": 1.2,
+      "penalty_window": 50,
+      "min_tokens": 200,
+      "max_tokens": 1000
+    }
+  },
+  "cot": "full",
+  "cfg_scale": 1.0,
+  "cfg_negative": "same_instruction_and_exact_abc",
+  "backend": "torch-eager",
+  "quantization": "none",
+  "model_dtype": "bfloat16",
+  "vae_dtype": "float32",
+  "vae_decode": "halo_crop",
+  "vae_core_frames": 256,
+  "vae_halo_frames": 16,
+  "device": "mps",
+  "memory_budget_gib": 16.0,
+  "offload_ar": true,
+  "runtime_sha256": "d39a00f9071a704b2b96a298fb599cbc956bda2b41837503b69cd9b56c484903",
+  "decoder_release": "standard",
+  "validation_status": "unvalidated",
+  "vae_device": "cpu"
+}

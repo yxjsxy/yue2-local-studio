@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YuE2 · 我的音乐工作台</title><link rel="stylesheet" href="/studio.css"><script src="/studio.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">YuE2 <span>我的音乐工作台</span></a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener">听原始复现样例</a></header>
+<main>
+<section class="intro"><h1>把你写的词，唱出来。</h1><p>写几句歌词，描述你想听到的声音。YuE2 会在这台 Mac 上创作人声和伴奏。</p></section>
+<div class="workspace">
+<section class="composer"><form id="song-form">
+<div class="section-head"><h2>创作一首短歌</h2><button class="quiet" type="button" id="example">填入示例</button></div>
+<label for="lyrics">歌词 <span id="count">0 / 160</span></label>
+<textarea id="lyrics" name="lyrics" maxlength="160" required rows="7" placeholder="写下想唱出来的话，建议先试 2–6 行。"></textarea>
+<div class="row"><div><label for="mode">创作方式</label><select id="mode"><option value="full">歌曲 · 先写曲谱再演唱</option><option value="off">说唱 · 直接生成音频</option></select></div><div><label for="preset">风格起点</label><select id="preset"><option value="folk">温柔民谣</option><option value="jazz">轻松爵士</option><option value="rap">中文说唱</option><option value="pop">明亮流行</option></select></div></div>
+<label for="style">音乐风格</label><textarea id="style" name="style" required maxlength="400" rows="3"></textarea>
+<p class="hint">可以写语言、男女声、乐器、情绪和速度。中文或英文都可以。</p>
+<details><summary>更多设置</summary><label for="seed">随机种子</label><input id="seed" type="number" min="0" max="2147483647" value="42" required><p class="hint">保留同一个数方便比较；换一个数可以尝试新的演绎。</p></details>
+<div class="submit-row"><button id="generate" class="primary" type="submit">生成我的歌曲</button><span>本机运行 · 一次一首</span></div>
+<p id="form-error" role="alert"></p>
+<p class="limits">先体验短片段：生成上限约 48 秒，实际长度由模型决定。此前实测约需 2–3 分钟；内存紧张时可能更久，超过 20 分钟会停止。</p>
+</form></section>
+<section class="listen"><div class="section-head"><h2>听听你的作品</h2><span id="connection">正在连接</span></div>
+<div id="empty"><div class="record" aria-hidden="true"><span></span></div><h3>下一首，从你的歌词开始</h3><p>生成后在这里试听、下载，或者把输入带回左边，再改一个版本。</p></div>
+<div id="current" hidden><p id="job-status" aria-live="polite"></p><h3 id="job-title"></h3><p id="stage"></p><p id="elapsed" class="hint"></p><button id="cancel" type="button" class="secondary">取消生成</button><p id="job-error" role="alert"></p><div id="result" hidden><audio id="player" controls preload="metadata"></audio><div class="links"><a id="download">下载音频</a><a id="score">查看曲谱</a><button id="reuse" class="quiet" type="button">用这份输入再改一版</button></div><p id="quality" class="hint"></p></div><details><summary>本次歌词与风格</summary><pre id="saved-input"></pre></details></div>
+</section>
+</div>
+<section class="history"><h2>最近的创作</h2><p id="history-empty" class="hint">每次生成会保存在本机，刷新页面也不会丢失已完成的作品。</p><div id="history-list"></div></section>
+<footer>本地生成，歌词不会发送到外部音乐服务。生成质量、咬字和风格符合程度需要你试听判断。</footer>
+</main>
+</body></html>

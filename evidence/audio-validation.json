@@ -1,0 +1,86 @@
+{
+  "chinese-baseline": {
+    "duration_seconds": 39.83866666666667,
+    "sample_rate": 48000,
+    "channels": 2,
+    "finite": true,
+    "peak": 0.9185330271720886,
+    "rms": 0.08888735989140743,
+    "truncated": {
+      "abc": false,
+      "semantic": false
+    },
+    "measured_e2e_seconds": 141.97013902664185,
+    "max_sampled_rss_bytes": 2881241088,
+    "max_sampled_mps_driver_bytes": 9546678272,
+    "quality_note": "Signal checks only; no human listening or ASR quality claim.",
+    "near_full_scale_samples": 0,
+    "near_full_scale_sample_fraction": 0.0,
+    "longest_near_full_scale_run_ms": 0,
+    "pcm_frames": 1912256,
+    "audio_sha256": "65bf7b9365635faab8e5fb3007b887d7aa0847673b633a82c4413a9908df2b86"
+  },
+  "chinese-rap": {
+    "duration_seconds": 22.758666666666667,
+    "sample_rate": 48000,
+    "channels": 2,
+    "finite": true,
+    "peak": 1.0,
+    "rms": 0.1302413031965166,
+    "truncated": {
+      "abc": false,
+      "semantic": false
+    },
+    "measured_e2e_seconds": 90.30752921104431,
+    "max_sampled_rss_bytes": 3526410240,
+    "max_sampled_mps_driver_bytes": 9047146496,
+    "quality_note": "Signal checks only; no human listening or ASR quality claim.",
+    "near_full_scale_samples": 1,
+    "near_full_scale_sample_fraction": 4.577010955533423e-07,
+    "longest_near_full_scale_run_ms": 0.020833333333333332,
+    "pcm_frames": 1092416,
+    "audio_sha256": "0a20f64a0886be8304d382ae0885030b6020b02a597cd66cbaba7758ca46dea1"
+  },
+  "chinese-harmony": {
+    "duration_seconds": 38.55866666666667,
+    "sample_rate": 48000,
+    "channels": 2,
+    "finite": true,
+    "peak": 0.8178197145462036,
+    "rms": 0.10240991974452902,
+    "truncated": {
+      "abc": false,
+      "semantic": false
+    },
+    "measured_e2e_seconds": 124.19672703742981,
+    "max_sampled_rss_bytes": 4439474176,
+    "max_sampled_mps_driver_bytes": 8735031296,
+    "quality_note": "Signal checks only; no human listening or ASR quality claim.",
+    "near_full_scale_samples": 0,
+    "near_full_scale_sample_fraction": 0.0,
+    "longest_near_full_scale_run_ms": 0,
+    "pcm_frames": 1850816,
+    "audio_sha256": "c0f41e4e6383446fdfa0f0628b3b59d34b351fbe608871bff20f41cb77c1d465"
+  },
+  "chinese-jazz-cover-complete": {
+    "duration_seconds": 39.958666666666666,
+    "sample_rate": 48000,
+    "channels": 2,
+    "finite": true,
+    "peak": 0.9886243939399719,
+    "rms": 0.11990406077390958,
+    "truncated": {
+      "abc": false,
+      "semantic": false
+    },
+    "measured_e2e_seconds": 114.89420485496521,
+    "max_sampled_rss_bytes": 4561354752,
+    "max_sampled_mps_driver_bytes": 9785606144,
+    "quality_note": "Signal checks only; no human listening or ASR quality claim.",
+    "near_full_scale_samples": 0,
+    "near_full_scale_sample_fraction": 0.0,
+    "longest_near_full_scale_run_ms": 0,
+    "pcm_frames": 1918016,
+    "audio_sha256": "11f491ac65ebf3e027938f103f4cfee19c59c5d7fbe17eb33ad4e3238969ede8"
+  }
+}

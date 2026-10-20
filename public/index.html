@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; media-src 'self' file:; base-uri 'none'; form-action 'none'">
+<title>YuE2 listening comparison</title><style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:1100px;margin:36px auto;padding:0 20px;background:#f6f7f9;color:#17212b}
+article{background:white;border:1px solid #d7dee7;border-radius:12px;padding:24px;margin:24px 0}
+h1,h2,h3{line-height:1.2}h2{margin-top:0}audio{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.55 ui-monospace,monospace}
+dt{font-weight:650}dd{margin:0 0 10px;overflow-wrap:anywhere}details{border-top:1px solid #d7dee7;padding:12px 0}summary{cursor:pointer;font-weight:600}
+a{color:#174faf}.warning{color:#842b19}.status{font-weight:700}.note{color:#475569}
+</style></head><body><h1>YuE2 listening comparison</h1>
+<p class="note">Local listening bundle. Prompts, lyrics and available score/metadata are copied below.
+Model and decoder signatures identify the recorded generation; no model weights or acoustic latents are included.
+Integrity checks concern copied artifacts only, not musical quality, codec decoding, or a complete regeneration audit.
+Use the download link if your browser does not play the original audio format.</p>
+<article><h2>afternoon_song</h2><p class="status">complete</p>
+<audio controls preload="none"><source src="case-001/audio.flac" type="audio/flac">Your browser does not support this audio format.</audio>
+<p><a href="case-001/audio.flac" download>Download original audio</a></p>
+<dl><dt>Mode</dt><dd>full</dd><dt>Seed</dt><dd>42</dd><dt>Decoder release</dt><dd>standard</dd><dt>Native status</dt><dd>complete</dd><dt>Truncated</dt><dd>{
+  &quot;abc&quot;: false,
+  &quot;semantic&quot;: false
+}</dd><dt>Recorded duration (seconds)</dt><dd>39.83866666666667</dd><dt>Sample rate</dt><dd>48000</dd><dt>Runtime validation status</dt><dd>unvalidated</dd><dt>Result identity</dt><dd>361a761889ac889ab79211ff703f01e98a8d57b9c0f7f1f13832c557c23f1518</dd></dl>
+<h3>Style prompt</h3><pre>Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending</pre>
+<h3>Lyrics</h3><pre>[Verse]
+窗边落下一束光
+咖啡微热书页香
+慢慢走过小巷旁
+把好心情轻轻唱</pre>
+<details><summary>Model and decoder weight signatures</summary><pre>{
+  &quot;mot&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9&quot;,
+        &quot;bytes&quot;: 7261441640
+      }
+    },
+    &quot;config_sha256&quot;: &quot;ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329&quot;
+  },
+  &quot;vae&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346&quot;,
+        &quot;bytes&quot;: 530512720
+      }
+    },
+    &quot;config_sha256&quot;: &quot;f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970&quot;
+  }
+}</pre></details>
+<details><summary>Artifact integrity checks</summary><pre>{
+  &quot;request.json&quot;: &quot;passed&quot;,
+  &quot;config.json&quot;: &quot;passed&quot;,
+  &quot;result.json&quot;: &quot;not listed&quot;,
+  &quot;score.abc&quot;: &quot;passed&quot;,
+  &quot;audio.flac&quot;: &quot;passed&quot;
+}</pre></details>
+<details><summary>Full exact request</summary><pre>{
+  &quot;style&quot;: &quot;Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending&quot;,
+  &quot;lyrics&quot;: &quot;[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱&quot;,
+  &quot;cot&quot;: &quot;full&quot;,
+  &quot;seed&quot;: 42,
+  &quot;abc&quot;: null,
+  &quot;cfg_scale&quot;: null,
+  &quot;id&quot;: &quot;afternoon_song&quot;
+}</pre></details>
+<details><summary>Score ABC</summary><pre>X:1
+T:
+M:4/4
+L:1/16
+Q:1/4=100
+V: Vocal clef=treble name=&quot;Vocal Melody&quot; snm=&quot;Vocal&quot;
+V: Ins clef=treble name=&quot;Ins Melody&quot; snm=&quot;Inst.&quot;
+K:D
+% intro
+V: Vocal
+Z|&quot;D&quot;z16|&quot;F#m7&quot;z16|&quot;Bm7&quot;z16|
+V: Ins
+Z|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|
+V: Vocal
+&quot;F#m7&quot;z16|&quot;Gmaj7&quot;z16|&quot;F#m7&quot;z8&quot;Bm7&quot;z8|&quot;Em7&quot;z16|
+V: Ins
+f8-f2f&#x27;2e&#x27;2d&#x27;2|b2d&#x27;2d&#x27;2b2d&#x27;4b2a2-|a4e2d8z2|g4z2g2g3f3d2|
+V: Vocal
+&quot;A&quot;z16|
+V: Ins
+e16|
+% verse
+V: Vocal
+&quot;D&quot;f2a2a2f2a4b2f2-|&quot;F#m7&quot;f4z12|&quot;Bm7&quot;B2d2d2B2d4e2f2-|&quot;F#m7&quot;f4z12|
+V: Ins
+Z4|
+V: Vocal
+&quot;Gmaj7&quot;B2d2d2B2d4b2a2-|&quot;F#m7&quot;a4&quot;Bm7&quot;e2d4z6|&quot;Em7&quot;g2f2g2f2d4B4|&quot;D&quot;d6z8z2|
+V: Ins
+Z4|
+</pre></details>
+<details><summary>Copied artifacts</summary><ul><li><a href="case-001/request.json" download>request.json</a></li><li><a href="case-001/config.json" download>config.json</a></li><li><a href="case-001/result.json" download>result.json</a></li><li><a href="case-001/score.abc" download>score.abc</a></li><li><a href="case-001/audio.flac" download>audio.flac</a></li></ul></details></article>
+<article><h2>friendly_rap</h2><p class="status">complete</p>
+<audio controls preload="none"><source src="case-002/audio.flac" type="audio/flac">Your browser does not support this audio format.</audio>
+<p><a href="case-002/audio.flac" download>Download original audio</a></p>
+<dl><dt>Mode</dt><dd>off</dd><dt>Seed</dt><dd>42</dd><dt>Decoder release</dt><dd>standard</dd><dt>Native status</dt><dd>complete</dd><dt>Truncated</dt><dd>{
+  &quot;abc&quot;: false,
+  &quot;semantic&quot;: false
+}</dd><dt>Recorded duration (seconds)</dt><dd>22.758666666666667</dd><dt>Sample rate</dt><dd>48000</dd><dt>Runtime validation status</dt><dd>unvalidated</dd><dt>Result identity</dt><dd>142bf261a998663a9ce561c1ce96ae1265cf4031bc213e219a9b05bca5f4fe69</dd></dl>
+<h3>Style prompt</h3><pre>Mandarin Chinese rap, clear rhythmic male voice, relaxed upbeat hip-hop drums and warm bass, 96 BPM, short clean four-line verse</pre>
+<h3>Lyrics</h3><pre>[Verse]
+小爽走来眼里有光
+难题来了也不慌张
+一句加油给人力量
+今天掌声为你响亮</pre>
+<details><summary>Model and decoder weight signatures</summary><pre>{
+  &quot;mot&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9&quot;,
+        &quot;bytes&quot;: 7261441640
+      }
+    },
+    &quot;config_sha256&quot;: &quot;ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329&quot;
+  },
+  &quot;vae&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346&quot;,
+        &quot;bytes&quot;: 530512720
+      }
+    },
+    &quot;config_sha256&quot;: &quot;f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970&quot;
+  }
+}</pre></details>
+<details><summary>Artifact integrity checks</summary><pre>{
+  &quot;request.json&quot;: &quot;passed&quot;,
+  &quot;config.json&quot;: &quot;passed&quot;,
+  &quot;result.json&quot;: &quot;not listed&quot;,
+  &quot;audio.flac&quot;: &quot;passed&quot;
+}</pre></details>
+<details><summary>Full exact request</summary><pre>{
+  &quot;style&quot;: &quot;Mandarin Chinese rap, clear rhythmic male voice, relaxed upbeat hip-hop drums and warm bass, 96 BPM, short clean four-line verse&quot;,
+  &quot;lyrics&quot;: &quot;[Verse]\n小爽走来眼里有光\n难题来了也不慌张\n一句加油给人力量\n今天掌声为你响亮&quot;,
+  &quot;cot&quot;: &quot;off&quot;,
+  &quot;seed&quot;: 42,
+  &quot;abc&quot;: null,
+  &quot;cfg_scale&quot;: null,
+  &quot;id&quot;: &quot;friendly_rap&quot;
+}</pre></details>
+<details><summary>Copied artifacts</summary><ul><li><a href="case-002/request.json" download>request.json</a></li><li><a href="case-002/config.json" download>config.json</a></li><li><a href="case-002/result.json" download>result.json</a></li><li><a href="case-002/audio.flac" download>audio.flac</a></li></ul></details></article>
+<article><h2>afternoon_harmony</h2><p class="status">complete</p>
+<audio controls preload="none"><source src="case-003/audio.flac" type="audio/flac">Your browser does not support this audio format.</audio>
+<p><a href="case-003/audio.flac" download>Download original audio</a></p>
+<dl><dt>Mode</dt><dd>full</dd><dt>Seed</dt><dd>42</dd><dt>Decoder release</dt><dd>standard</dd><dt>Native status</dt><dd>complete</dd><dt>Truncated</dt><dd>{
+  &quot;abc&quot;: false,
+  &quot;semantic&quot;: false
+}</dd><dt>Recorded duration (seconds)</dt><dd>38.55866666666667</dd><dt>Sample rate</dt><dd>48000</dd><dt>Runtime validation status</dt><dd>unvalidated</dd><dt>Result identity</dt><dd>d14fb17571d4fe6c4e00b74f327cf95e53f4ee08790c168ede4c3cb0d10234ce</dd></dl>
+<h3>Style prompt</h3><pre>Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending</pre>
+<h3>Lyrics</h3><pre>[Verse]
+窗边落下一束光
+咖啡微热书页香
+慢慢走过小巷旁
+把好心情轻轻唱</pre>
+<details><summary>Model and decoder weight signatures</summary><pre>{
+  &quot;mot&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9&quot;,
+        &quot;bytes&quot;: 7261441640
+      }
+    },
+    &quot;config_sha256&quot;: &quot;ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329&quot;
+  },
+  &quot;vae&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346&quot;,
+        &quot;bytes&quot;: 530512720
+      }
+    },
+    &quot;config_sha256&quot;: &quot;f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970&quot;
+  }
+}</pre></details>
+<details><summary>Artifact integrity checks</summary><pre>{
+  &quot;request.json&quot;: &quot;passed&quot;,
+  &quot;config.json&quot;: &quot;passed&quot;,
+  &quot;result.json&quot;: &quot;not listed&quot;,
+  &quot;score.abc&quot;: &quot;passed&quot;,
+  &quot;audio.flac&quot;: &quot;passed&quot;
+}</pre></details>
+<details><summary>Full exact request</summary><pre>{
+  &quot;style&quot;: &quot;Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending&quot;,
+  &quot;lyrics&quot;: &quot;[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱&quot;,
+  &quot;cot&quot;: &quot;full&quot;,
+  &quot;seed&quot;: 42,
+  &quot;abc&quot;: &quot;X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=100\nV: Vocal clef=treble name=\&quot;Vocal Melody\&quot; snm=\&quot;Vocal\&quot;\nV: Ins clef=treble name=\&quot;Ins Melody\&quot; snm=\&quot;Inst.\&quot;\nK:D\n% intro\nV: Vocal\nZ|\&quot;Dmaj7\&quot;z16|\&quot;F#m7\&quot;z16|\&quot;Bm7\&quot;z16|\nV: Ins\nZ|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|\nV: Vocal\n\&quot;F#m7\&quot;z16|\&quot;Gmaj7\&quot;z16|\&quot;F#m7\&quot;z8\&quot;Bm7\&quot;z8|\&quot;Em7\&quot;z16|\nV: Ins\nf8-f2f&#x27;2e&#x27;2d&#x27;2|b2d&#x27;2d&#x27;2b2d&#x27;4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\n\&quot;A7\&quot;z16|\nV: Ins\ne16|\n% verse\nV: Vocal\n\&quot;Dmaj7\&quot;f2a2a2f2a4b2f2-|\&quot;F#m7\&quot;f4z12|\&quot;Bm7\&quot;B2d2d2B2d4e2f2-|\&quot;F#m7\&quot;f4z12|\nV: Ins\nZ4|\nV: Vocal\n\&quot;Gmaj7\&quot;B2d2d2B2d4b2a2-|\&quot;F#m7\&quot;a4\&quot;Bm7\&quot;e2d4z6|\&quot;Em7\&quot;g2f2g2f2d4B4|\&quot;D6\&quot;d6z8z2|\nV: Ins\nZ4|\n&quot;,
+  &quot;cfg_scale&quot;: null,
+  &quot;id&quot;: &quot;afternoon_harmony&quot;
+}</pre></details>
+<details><summary>Score ABC</summary><pre>X:1
+T:
+M:4/4
+L:1/16
+Q:1/4=100
+V: Vocal clef=treble name=&quot;Vocal Melody&quot; snm=&quot;Vocal&quot;
+V: Ins clef=treble name=&quot;Ins Melody&quot; snm=&quot;Inst.&quot;
+K:D
+% intro
+V: Vocal
+Z|&quot;Dmaj7&quot;z16|&quot;F#m7&quot;z16|&quot;Bm7&quot;z16|
+V: Ins
+Z|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|
+V: Vocal
+&quot;F#m7&quot;z16|&quot;Gmaj7&quot;z16|&quot;F#m7&quot;z8&quot;Bm7&quot;z8|&quot;Em7&quot;z16|
+V: Ins
+f8-f2f&#x27;2e&#x27;2d&#x27;2|b2d&#x27;2d&#x27;2b2d&#x27;4b2a2-|a4e2d8z2|g4z2g2g3f3d2|
+V: Vocal
+&quot;A7&quot;z16|
+V: Ins
+e16|
+% verse
+V: Vocal
+&quot;Dmaj7&quot;f2a2a2f2a4b2f2-|&quot;F#m7&quot;f4z12|&quot;Bm7&quot;B2d2d2B2d4e2f2-|&quot;F#m7&quot;f4z12|
+V: Ins
+Z4|
+V: Vocal
+&quot;Gmaj7&quot;B2d2d2B2d4b2a2-|&quot;F#m7&quot;a4&quot;Bm7&quot;e2d4z6|&quot;Em7&quot;g2f2g2f2d4B4|&quot;D6&quot;d6z8z2|
+V: Ins
+Z4|
+</pre></details>
+<details><summary>Copied artifacts</summary><ul><li><a href="case-003/request.json" download>request.json</a></li><li><a href="case-003/config.json" download>config.json</a></li><li><a href="case-003/result.json" download>result.json</a></li><li><a href="case-003/score.abc" download>score.abc</a></li><li><a href="case-003/audio.flac" download>audio.flac</a></li></ul></details></article>
+<article><h2>afternoon_jazz_cover</h2><p class="status">complete</p>
+<audio controls preload="none"><source src="case-004/audio.flac" type="audio/flac">Your browser does not support this audio format.</audio>
+<p><a href="case-004/audio.flac" download>Download original audio</a></p>
+<dl><dt>Mode</dt><dd>melody</dd><dt>Seed</dt><dd>42</dd><dt>Decoder release</dt><dd>standard</dd><dt>Native status</dt><dd>complete</dd><dt>Truncated</dt><dd>{
+  &quot;abc&quot;: false,
+  &quot;semantic&quot;: false
+}</dd><dt>Recorded duration (seconds)</dt><dd>39.958666666666666</dd><dt>Sample rate</dt><dd>48000</dd><dt>Runtime validation status</dt><dd>unvalidated</dd><dt>Result identity</dt><dd>a5be2b01e04c45ec555d2eb896e0c72cd076d8eef17779a83a5431965bfc397b</dd></dl>
+<h3>Style prompt</h3><pre>Mandarin Chinese, warm intimate female vocal, relaxed jazz arrangement, 98 BPM, piano, upright bass, brushed drums, spacious acoustic sound</pre>
+<h3>Lyrics</h3><pre>[Verse]
+窗边落下一束光
+咖啡微热书页香
+慢慢走过小巷旁
+把好心情轻轻唱</pre>
+<details><summary>Model and decoder weight signatures</summary><pre>{
+  &quot;mot&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;1d55c42c1a9875c34f5d736e15078449992b044e807ce2a138e6cf289a1e59e9&quot;,
+        &quot;bytes&quot;: 7261441640
+      }
+    },
+    &quot;config_sha256&quot;: &quot;ad3477bbef890bf98ae196c1e4b44779494a6231c4ab66f32708eabadf265329&quot;
+  },
+  &quot;vae&quot;: {
+    &quot;files&quot;: {
+      &quot;model.safetensors&quot;: {
+        &quot;sha256&quot;: &quot;807ce9d5149fa27c5ad3e6582058469852e908f6c5acc8c8aa338e7ab7751346&quot;,
+        &quot;bytes&quot;: 530512720
+      }
+    },
+    &quot;config_sha256&quot;: &quot;f0191bb9694009956de44e0c361a6f1334760be4c8f848e599bde242a54a0970&quot;
+  }
+}</pre></details>
+<details><summary>Artifact integrity checks</summary><pre>{
+  &quot;request.json&quot;: &quot;passed&quot;,
+  &quot;config.json&quot;: &quot;passed&quot;,
+  &quot;result.json&quot;: &quot;not listed&quot;,
+  &quot;score.abc&quot;: &quot;passed&quot;,
+  &quot;audio.flac&quot;: &quot;passed&quot;
+}</pre></details>
+<details><summary>Full exact request</summary><pre>{
+  &quot;style&quot;: &quot;Mandarin Chinese, warm intimate female vocal, relaxed jazz arrangement, 98 BPM, piano, upright bass, brushed drums, spacious acoustic sound&quot;,
+  &quot;lyrics&quot;: &quot;[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱&quot;,
+  &quot;cot&quot;: &quot;melody&quot;,
+  &quot;seed&quot;: 42,
+  &quot;abc&quot;: &quot;X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=98\nV: Vocal clef=treble name=\&quot;Vocal Melody\&quot; snm=\&quot;Vocal\&quot;\nV: Ins clef=treble name=\&quot;Ins Melody\&quot; snm=\&quot;Inst.\&quot;\nK:D\n% intro\nV: Vocal\nZ|f2a2a2f2a4b2a2-|a4f2e4dz4z|f2a2a2f2a4b2f2-|\nV: Ins\nZ4|\nV: Vocal\nf6z8z2|Z3|\nV: Ins\nz8z2f&#x27;2e&#x27;2d&#x27;2|b2d&#x27;2d&#x27;2b2d&#x27;4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\nZ|\nV: Ins\ne16|\n% verse\nV: Vocal\nf2a2a2f2a4f2f2|fz12z3|B2B2d4d2e2f2f2-|f2z12z2|\nV: Ins\nZ4|\nV: Vocal\nB2B2d2B2d2a2b2a2-|a6e2d4z4|f2e2d2d4B2z4|Z|\nV: Ins\nZ4|\n&quot;,
+  &quot;cfg_scale&quot;: null,
+  &quot;id&quot;: &quot;afternoon_jazz_cover&quot;
+}</pre></details>
+<details><summary>Score ABC</summary><pre>X:1
+T:
+M:4/4
+L:1/16
+Q:1/4=98
+V: Vocal clef=treble name=&quot;Vocal Melody&quot; snm=&quot;Vocal&quot;
+V: Ins clef=treble name=&quot;Ins Melody&quot; snm=&quot;Inst.&quot;
+K:D
+% intro
+V: Vocal
+Z|f2a2a2f2a4b2a2-|a4f2e4dz4z|f2a2a2f2a4b2f2-|
+V: Ins
+Z4|
+V: Vocal
+f6z8z2|Z3|
+V: Ins
+z8z2f&#x27;2e&#x27;2d&#x27;2|b2d&#x27;2d&#x27;2b2d&#x27;4b2a2-|a4e2d8z2|g4z2g2g3f3d2|
+V: Vocal
+Z|
+V: Ins
+e16|
+% verse
+V: Vocal
+f2a2a2f2a4f2f2|fz12z3|B2B2d4d2e2f2f2-|f2z12z2|
+V: Ins
+Z4|
+V: Vocal
+B2B2d2B2d2a2b2a2-|a6e2d4z4|f2e2d2d4B2z4|Z|
+V: Ins
+Z4|
+</pre></details>
+<details><summary>Copied artifacts</summary><ul><li><a href="case-004/request.json" download>request.json</a></li><li><a href="case-004/config.json" download>config.json</a></li><li><a href="case-004/result.json" download>result.json</a></li><li><a href="case-004/score.abc" download>score.abc</a></li><li><a href="case-004/audio.flac" download>audio.flac</a></li></ul></details></article>
+<p><a href="manifest.json">Bundle manifest and SHA-256 hashes</a></p></body></html>

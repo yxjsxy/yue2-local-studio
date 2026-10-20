@@ -1,0 +1,14 @@
+{
+  "reviewer": "/root/score_review",
+  "status": "PASS_symbolic_contract",
+  "method": "Independent raw before/after ABC and request inspection before reading edit manifest",
+  "findings": [
+    "Only four chord labels changed. Removing chord labels makes scores identical.",
+    "Vocal and Ins sounding pitches, durations, ties, tempo, meter and key are preserved.",
+    "Requests differ only in id; style, lyrics, cot=full and seed=42 remain the same.",
+    "Dmaj7, A7 and D6 are legal native chord syntax.",
+    "No obvious new sustained melody/harmony clash was found in the edited spans.",
+    "Chord roots remain unchanged; exact bass, voicing and voice leading are not constrained."
+  ],
+  "limitations": "No audio listening or inference by reviewer. Symbolic invariants do not prove audio melody fidelity or subjective quality."
+}

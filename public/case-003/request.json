@@ -1,0 +1,9 @@
+{
+  "style": "Mandarin Chinese, warm intimate female vocal, acoustic guitar and soft piano, gentle light drums, simple memorable melody, 100 BPM, a short 20-second verse with a clean ending",
+  "lyrics": "[Verse]\n窗边落下一束光\n咖啡微热书页香\n慢慢走过小巷旁\n把好心情轻轻唱",
+  "cot": "full",
+  "seed": 42,
+  "abc": "X:1\nT:\nM:4/4\nL:1/16\nQ:1/4=100\nV: Vocal clef=treble name=\"Vocal Melody\" snm=\"Vocal\"\nV: Ins clef=treble name=\"Ins Melody\" snm=\"Inst.\"\nK:D\n% intro\nV: Vocal\nZ|\"Dmaj7\"z16|\"F#m7\"z16|\"Bm7\"z16|\nV: Ins\nZ|f2a2a2f2a4b2a2-|a2z2f2e4d4z2|f2a2a2f2a4b2f2-|\nV: Vocal\n\"F#m7\"z16|\"Gmaj7\"z16|\"F#m7\"z8\"Bm7\"z8|\"Em7\"z16|\nV: Ins\nf8-f2f'2e'2d'2|b2d'2d'2b2d'4b2a2-|a4e2d8z2|g4z2g2g3f3d2|\nV: Vocal\n\"A7\"z16|\nV: Ins\ne16|\n% verse\nV: Vocal\n\"Dmaj7\"f2a2a2f2a4b2f2-|\"F#m7\"f4z12|\"Bm7\"B2d2d2B2d4e2f2-|\"F#m7\"f4z12|\nV: Ins\nZ4|\nV: Vocal\n\"Gmaj7\"B2d2d2B2d4b2a2-|\"F#m7\"a4\"Bm7\"e2d4z6|\"Em7\"g2f2g2f2d4B4|\"D6\"d6z8z2|\nV: Ins\nZ4|\n",
+  "cfg_scale": null,
+  "id": "afternoon_harmony"
+}

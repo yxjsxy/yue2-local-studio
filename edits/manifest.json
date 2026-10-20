@@ -1,0 +1,27 @@
+{
+  "source_sha256": "b6290a29a587f5a4436a6cec8ea31230d8c1648482f0294729c0bfa5b09dc50c",
+  "changes": [
+    {
+      "original": "D",
+      "edited": "Dmaj7",
+      "character_offset": 155
+    },
+    {
+      "original": "A",
+      "edited": "A7",
+      "character_offset": 366
+    },
+    {
+      "original": "D",
+      "edited": "Dmaj7",
+      "character_offset": 403
+    },
+    {
+      "original": "D",
+      "edited": "D6",
+      "character_offset": 549
+    }
+  ],
+  "contract": "Preserve all sounding melody notes, rhythm, meter, tempo, lyrics, style and seed. Change quoted harmony only. Final tonic uses D6 rather than major seventh against sustained tonic.",
+  "quality_note": "Symbolic control experiment; audible harmony quality is not guaranteed."
+}

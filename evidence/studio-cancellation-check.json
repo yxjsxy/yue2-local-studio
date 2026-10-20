@@ -1,0 +1,6 @@
+{
+  "cancelled_job": "18730d6222ba4616",
+  "observed_status": "cancelled",
+  "new_job_accepted_after_cancel": true,
+  "origin": "Browser UI interaction by user during verification; no agent claim of personally clicking cancel."
+}

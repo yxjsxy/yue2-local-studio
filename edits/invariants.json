@@ -1,0 +1,10 @@
+{
+  "match": true,
+  "compared_voices": [
+    "Vocal",
+    "Ins"
+  ],
+  "tempo_change_allowed": false,
+  "differences": [],
+  "scope": "exact symbolic melody and meter; no claim about generated audio or unchanged harmony"
+}
