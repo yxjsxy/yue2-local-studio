@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YuE2 · 我的音乐工作台</title><link rel="stylesheet" href="/studio.css"><script src="/studio.js" defer></script></head>
 <body>
-<header><a class="brand" href="/">YuE2 <span>我的音乐工作台</span></a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener">听原始复现样例</a></header>
+<header><a class="brand" href="/">YuE2 <span>我的音乐工作台</span></a><a href="/library">打开歌曲合集</a></header>
 <main>
 <section class="intro"><h1>把你写的词，唱出来。</h1><p>写下完整歌词，描述你想听到的声音。YuE2 会在这台 Mac 上创作人声和伴奏。</p></section>
 <div class="workspace">
@@ -20,7 +20,7 @@
 </form></section>
 <section class="listen"><div class="section-head"><h2>听听你的作品</h2><span id="connection">正在连接</span></div>
 <div id="empty"><div class="record" aria-hidden="true"><span></span></div><h3>下一首，从你的歌词开始</h3><p>生成后在这里试听、下载，或者把输入带回左边，再改一个版本。</p></div>
-<div id="current" hidden><p id="job-status" aria-live="polite"></p><h3 id="job-title"></h3><p id="stage"></p><p id="elapsed" class="hint"></p><button id="cancel" type="button" class="secondary">取消生成</button><p id="job-error" role="alert"></p><div id="result" hidden><audio id="player" controls preload="metadata"></audio><div class="links"><a id="download">下载音频</a><a id="score">查看曲谱</a><button id="reuse" class="quiet" type="button">用这份输入再改一版</button></div><p id="quality" class="hint"></p></div><details><summary>本次歌词与风格</summary><pre id="saved-input"></pre></details></div>
+<div id="current" hidden><p id="job-status" aria-live="polite"></p><h3 id="job-title"></h3><p id="stage" role="status"></p><progress id="stage-progress" hidden></progress><p id="stage-completed" class="hint"></p><p id="elapsed" class="hint"></p><button id="cancel" type="button" class="secondary">取消生成</button><p id="job-error" role="alert"></p><div id="result" hidden><audio id="player" controls preload="metadata"></audio><div class="links"><a id="download">下载音频</a><a id="score">查看曲谱</a><button id="reuse" class="quiet" type="button">用这份输入再改一版</button></div><p id="quality" class="hint"></p></div><details><summary>本次歌词与风格</summary><pre id="saved-input"></pre></details></div>
 </section>
 </div>
 <section class="history"><h2>最近的创作</h2><p id="history-empty" class="hint">每次生成会保存在本机，刷新页面也不会丢失已完成的作品。</p><div id="history-list"></div></section>

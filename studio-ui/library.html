@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>午夜八首 · 我的音乐合集</title><link rel="stylesheet" href="/library.css"><script src="/library.js" defer></script></head>
+<body>
+<header><a class="brand" href="/library">午夜八首<span>我的音乐合集</span></a><a href="/">写一首自己的歌</a></header>
+<main>
+<section class="opening"><div class="sleeve" aria-hidden="true"><div class="disc"><span>夜</span></div><div class="sleeve-title">每夜一张<br>自己的唱片</div></div><div class="intro"><p class="edition">民谣 / 爵士 / 说唱 / 流行</p><h1>留一些新歌，<br>给明天的自己。</h1><p>八种搭配，八个故事。完成一首，收藏一首。<br>听今天的新歌，也翻翻以前的收藏。</p><div class="intro-actions"><button id="play-all" class="primary">播放合集</button><button id="shuffle-all">随机听一首</button></div><p id="batch-status" role="status">正在读取歌曲…</p></div></section>
+<section id="generation-progress" class="generation-progress" hidden><strong id="generation-title"></strong><p id="generation-stage" role="status"></p><progress id="generation-bar"></progress><p id="generation-completed"></p></section>
+<nav class="playlist-tabs" aria-label="歌单"><button id="all-songs" aria-pressed="true">全部歌曲 <span id="all-count"></span></button><button id="liked-songs" aria-pressed="false">♥ 我喜欢的歌 <span id="liked-count"></span></button></nav>
+<p id="library-notice" role="status" aria-live="polite"></p>
+<div class="collection-head"><h2>唱片架 <span id="count"></span></h2><input id="search" type="search" placeholder="搜索歌名或歌词" aria-label="搜索歌名或歌词"></div>
+<div class="filters"><label>合集<select id="batch"><option value="">所有日期</option></select></label><label>曲风<select id="genre"><option value="">全部曲风</option><option value="folk">温柔民谣</option><option value="jazz">轻松爵士</option><option value="rap">中文说唱</option><option value="pop">明亮流行</option></select></label><label>目标声线<select id="voice"><option value="">全部声线</option><option value="male">男声</option><option value="female">女声</option></select></label><button id="refresh">刷新</button></div>
+<div class="collection"><section class="tracks-pane" aria-label="歌曲列表"><div class="list-heading"><span>歌曲 / 创作方向</span><span>时长 / 状态</span></div><div id="tracks"></div><p id="empty" hidden>这里还没有符合条件的歌曲，试试其他筛选。</p></section>
+<aside class="lyric-pane"><p class="lyric-caption">正在查看的歌词</p><h2 id="lyric-title">选一首歌</h2><p id="lyric-meta">点击歌曲，歌词会显示在这里。</p><div id="lyrics"></div><details id="song-details" hidden><summary>创作说明与音乐指令</summary><p id="description"></p><p id="style"></p><p>声线标签表示生成目标，尚未经过人工听验。歌词是创作原文，不是音频转写；实际演唱可能有偏差。</p><a id="download" download>下载这首歌</a></details></aside></div>
+<p class="footer-note">本机 YuE2 生成 · 历史歌曲持续保留 · 每首独立生成，人声与伴奏一次完成</p>
+</main>
+<dialog id="delete-dialog" aria-labelledby="delete-heading" aria-describedby="delete-description">
+<h2 id="delete-heading">永久删除这首歌？</h2><p id="delete-song-title"></p>
+<p id="delete-description">确认后将永久删除本机的 MP3、原音频、曲谱和生成文件，以及同一首歌的失败尝试和重复发布副本。无法恢复。</p>
+<p class="delete-note">只保留少量删除记录，防止定时任务把这首歌重新生成。</p>
+<p id="delete-error" role="alert"></p><div class="dialog-actions"><button id="cancel-delete">保留这首歌</button><button id="confirm-delete" class="danger">永久删除</button></div>
+</dialog>
+<footer class="player-bar"><div class="now"><div id="mini-disc" aria-hidden="true">♪</div><div><strong id="now-title">还没有开始播放</strong><span id="now-meta">选择一首歌曲，开始听</span></div></div><div class="transport"><button id="previous" aria-label="上一首">上一首</button><audio id="audio" controls preload="metadata"></audio><button id="next" aria-label="下一首">下一首</button></div><label class="mode">播放方式<select id="mode"><option value="list">列表循环</option><option value="one">单曲循环</option><option value="shuffle">随机循环</option></select></label><div class="playback-feedback"><p id="player-message" role="status"></p><button id="resume-playback" hidden>继续播放</button></div></footer>
+</body></html>

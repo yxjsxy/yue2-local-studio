@@ -21,3 +21,9 @@ __pycache__/
 
 /validation-data/
 !/evidence/full-song-validation.json
+
+/validation-data/
+/nightly-data/
+/.workbuddy/
+/upstream-svc/
+/nightly-test-data-*/

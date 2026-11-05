@@ -49,7 +49,9 @@ def record(stage):
         item["mps_allocated_bytes"] = torch.mps.current_allocated_memory()
         item["mps_driver_bytes"] = torch.mps.driver_allocated_memory()
     samples.append(item)
-    (out / "progress.json").write_text(json.dumps(samples, indent=2))
+    pending = out / "progress.tmp"
+    pending.write_text(json.dumps(samples, indent=2))
+    pending.replace(out / "progress.json")
     print(json.dumps(item), flush=True)
 
 

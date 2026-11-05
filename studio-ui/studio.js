@@ -1,3 +1,24 @@
+function songDownloadName(title,url){
+ const name=(title||'未命名歌曲').replace(/[\\/:*?"<>|\x00-\x1f]/g,'-').trim().slice(0,100)||'未命名歌曲';
+ const extension=url.split('?')[0].split('.').pop();
+ return `小Rei-${name}.${extension}`;
+}
+function progressOf(job){
+ if(job.progress)return job.progress;
+ const stage=job.stage||'',native=job.native_progress||'',direct=job.request?.cot==='off';
+ const score=direct?'曲谱规划已跳过（直接生成）':'曲谱已完成';
+ let p={phase:'loading',text:'正在加载本地模型',completed:[],current:null,total:null};
+ if(stage.startsWith('abc:')||native.includes('Planning score')){const m=native.match(/Planning score: (\d+) tokens/);p={...p,phase:'score',text:`正在创作曲谱 · 已生成 ${m?m[1]:stage.split(':')[1]||0} 个 token`,completed:['模型已加载']};}
+ if(stage==='planned'||stage.startsWith('semantic:')||native.includes('Generating song')){const m=native.match(/Generating song: (\d+) tokens/);const n=Number(m?m[1]:stage.split(':')[1]||0);p={...p,phase:'semantic',text:`正在生成演唱与编配 · 已生成约 ${(n/25).toFixed(0)} 秒音乐序列（非成品时长）`,completed:[score]};}
+ if(stage==='semantic_done'||native.includes('Synthesizing audio')){const m=native.match(/(\d+)\/(\d+) steps/);p={...p,phase:'synthesis',text:m?`正在合成音频 · ${m[1]} / ${m[2]} 步`:'正在合成音频',current:m?Number(m[1]):null,total:m?Number(m[2]):null,completed:[score,'演唱与编配序列已完成']};}
+ if(stage==='synthesized'||native.includes('Decoding audio')||native.includes('Loading audio decoder')){const m=native.match(/(\d+)\/(\d+) chunks/);p={...p,phase:'decode',text:m?`正在解码音频 · ${m[1]} / ${m[2]} 块`:native.includes('Loading audio decoder')?'正在加载音频解码器':'正在解码音频',current:m?Number(m[1]):null,total:m?Number(m[2]):null,completed:[score,'音频合成已完成']};}
+ if(stage==='complete')p={...p,phase:'save',text:'正在保存并校验原始音频',current:null,total:null,completed:[score,'音频合成与解码已完成']};
+ if(['completed','partial'].includes(job.status))p={...p,phase:'done',text:(job.status==='partial'?'生成片段已保存':'歌曲已完成')+(job.audio_url?.endsWith('.mp3')?' · MP3 320 kbps':' · FLAC'),current:null,total:null,completed:['音频已生成']};
+ if(job.status==='queued')p={...p,phase:'queued',text:'等待本机模型开始运行',current:null,total:null,completed:[]};
+ if(['failed','cancelled','interrupted'].includes(job.status))p={...p,phase:job.status,text:{failed:'生成失败',cancelled:'已取消',interrupted:'生成已中断'}[job.status],current:null,total:null,completed:[]};
+ return p;
+}
+function showStage(barId,noteId,p){const bar=$(barId);bar.hidden=['done','ready','failed','cancelled','interrupted','storage_failed'].includes(p.phase);bar.setAttribute('aria-label','当前阶段进度');if(p.total>0&&Number.isFinite(p.current)){bar.max=p.total;bar.value=p.current;}else{bar.removeAttribute('value');bar.removeAttribute('max');}$(noteId).textContent=(p.completed||[]).join(' · ')+(p.total>0?' · 进度条仅表示当前阶段':'');}
 const $ = id => document.getElementById(id);
 const fullExample = {
   "lyrics": "[Verse 1]\n晚风翻过安静的街巷\n路灯照着归途的方向\n我把白天没说完的话\n轻轻放进口袋里收藏\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Verse 2]\n地铁穿过城市的灯光\n窗外有人赶着去远方\n那些曾经走散的愿望\n仍在心里慢慢地生长\n\n[Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响\n\n[Bridge]\n如果夜色暂时遮住方向\n就让星光落在你的肩上\n我们不必追赶每次散场\n慢一点也会抵达心中远方\n\n[Final Chorus]\n让晚风带我回到你身旁\n把所有疲倦换成了月光\n不必急着回答明天怎样\n今夜我们就这样轻轻唱\n让晚风带我穿过这时光\n走过雨水也走过了晴朗\n只要心中还有一点希望\n最远的路也有温柔回响",
@@ -39,32 +60,21 @@ function render(){
   if(job){
     selected=job.id;
     $("job-status").textContent=(job.status==="completed" && job.metrics?.duration_target_met===false)?"音频已生成 · 时长偏离目标":(labels[job.status]||job.status);
-    $("job-title").textContent=job.request.lyrics.split("\n").filter(x=>!x.startsWith("["))[0] || "我的歌曲";
-    const stage=job.stage||"";
-    let text="正在加载本地模型";
-    if(stage==="planned"||stage.startsWith("semantic:")) text="正在为歌词生成演唱与编配";
-    if(stage.startsWith("abc:")) text="正在创作旋律与和弦曲谱";
-    if(stage==="semantic_done") text="正在合成音频";
-    if(stage==="synthesized") text="正在解码可播放音频";
-    if(job.native_progress?.includes("Synthesizing audio")){
-      const m=job.native_progress.match(/(\d+)\/(\d+) steps/);
-      if(m) text=`正在合成音频 · ${m[1]} / ${m[2]} 步`;
-    }
-    if(job.native_progress?.includes("Decoding audio")) text="正在解码可播放音频";
-    if(["completed","partial"].includes(job.status)) text=`实际 ${Math.floor(job.metrics.duration_seconds/60)} 分 ${(job.metrics.duration_seconds%60).toFixed(2)} 秒 · 48 kHz 双声道`;
-    else if(["failed","cancelled","interrupted"].includes(job.status)) text="可以修改左侧输入，再生成一个新版本。";
-    if(stage.startsWith("semantic:") && job.status==="running") text+=` · 已生成约 ${(Number(stage.split(":")[1])/25).toFixed(0)} 秒音乐序列`;
-    $("stage").textContent=text;
+    const songTitle=job.metadata?.title || job.request.lyrics.split("\n").find(x=>x.trim()&&!x.startsWith("["))?.trim().slice(0,22) || "未命名歌曲";
+    $("job-title").textContent=songTitle;
+    const p=progressOf(job);
+    $("stage").textContent=p.text;
+    showStage('stage-progress','stage-completed',p);
     $("elapsed").textContent=`${job.finished_at?"本次用时":"已等待"} ${Math.floor(job.elapsed_seconds/60)} 分 ${job.elapsed_seconds%60} 秒${job.plan_nominal_seconds ? ` · 曲谱估计 ${job.plan_nominal_seconds.toFixed(1)} 秒（非成品时长）` : ""}`;
-    $("cancel").hidden=!["queued","running"].includes(job.status);
+    $("cancel").hidden=!["queued","running"].includes(job.status)||["mp3","verify","cleanup","ready","stored"].includes(p.phase);
     $("cancel").disabled=!!job.cancel_requested;
     $("cancel").textContent=job.cancel_requested?"正在停止…":"取消生成";
-    $("job-error").textContent=job.error||"";
+    $("job-error").textContent=job.error||job.storage_warning||"";
     $("saved-input").textContent=`${job.request.lyrics}\n\n风格：${job.request.style}\n随机种子：${job.request.seed}\n目标时长：${job.options?.target_seconds || "模型决定"} 秒\n音频预算：${job.options?.max_audio_seconds || 48} 秒`;
     $("result").hidden=!job.audio_url;
     if(job.audio_url){
       if($("player").dataset.job!==job.id){$("player").src=job.audio_url;$("player").dataset.job=job.id;}
-      $("download").href=job.audio_url; $("download").download=`YuE2-${job.id}.flac`;
+      $("download").href=job.download_url||job.audio_url; $("download").download=songDownloadName(songTitle,job.audio_url);
       $("score").hidden=!job.score_url; if(job.score_url){$("score").href=job.score_url;$("score").target="_blank";}
       $("quality").textContent=job.status==="partial"?`这次触及 ${job.options?.max_audio_seconds || 48} 秒生成预算，结尾可能不完整。请查看歌词与预算后重试。`:`音频已生成${job.metrics.duration_target_met===false ? "，实际长度偏离目标超过15秒" : ""}。连续生成不等于听感验收，请试听段落衔接、歌词、音色和结尾。`;
     }
@@ -75,7 +85,7 @@ function render(){
     const btn=document.createElement("button");btn.className="history-item";btn.type="button";
     const title=document.createElement("span");title.textContent=(item.request.lyrics.split("\n").find(x=>x.trim() && !x.startsWith("[")) || "我的歌曲").slice(0,35);
     const duration=item.metrics?` · ${Math.floor(item.metrics.duration_seconds/60)}分${Math.floor(item.metrics.duration_seconds%60)}秒`:"";
-    const status=document.createElement("small");status.textContent=`${labels[item.status]}${duration} · ${new Date(item.created_at*1000).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})}`;
+    const status=document.createElement("small");status.textContent=`${item.status==="running"?progressOf(item).text:labels[item.status]}${duration} · ${new Date(item.created_at*1000).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})}`;
     btn.append(title,status);btn.onclick=()=>{selected=item.id;render();};$("history-list").append(btn);
   }
 }
@@ -83,6 +93,7 @@ async function refresh(){
   try{
     const r=await fetch("/api/state",{cache:"no-store"});if(!r.ok)throw new Error();
     const data=await r.json();token=data.token;jobs=data.jobs;busy=!!data.active || !!data.external_busy;
+    const catalogResponse=await fetch('/api/library',{cache:'no-store'});if(catalogResponse.ok){const catalog=await catalogResponse.json();const kept=new Set(catalog.tracks.filter(t=>!(['completed','partial','cancelled'].includes(t.status)&&!t.audio_url)).map(t=>t.id));jobs=jobs.filter(j=>kept.has(j.id));}
     $("connection").textContent="本机服务在线";render();
   }catch{$("connection").textContent="连接中断，请确认本机服务已启动";token="";$("generate").disabled=true;}
 }

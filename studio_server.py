@@ -1,4 +1,7 @@
 """Loopback-only YuE2 studio. One real subprocess at a time; no shell execution."""
+from nightly.audio import convert, preferred_audio, audio_filename
+from nightly.collection import CollectionError, read_state, is_deleted, deleted_request, favorite, delete_track
+from nightly.progress import read_progress
 import argparse
 import fcntl
 import json
@@ -12,7 +15,7 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 
 ROOT = Path(__file__).resolve().parent
 DATA = (ROOT / os.environ.get("YUE2_STUDIO_DATA_DIR", "studio-data")).resolve()
@@ -139,6 +142,7 @@ def run_job(job):
                                    error=None if cancel else f"超过{options['timeout_minutes']}分钟运行保护时限，已停止并保留阶段结果。")
                     break
                 time.sleep(0.5)
+            should_convert = False
             with LOCK:
                 if job["status"] == "running":
                     metrics_path = output / "signal_metrics.json"
@@ -146,14 +150,23 @@ def run_job(job):
                         metrics = json.loads(metrics_path.read_text())
                         if not metrics["finite"]:
                             raise ValueError("输出含无效数值。")
-                        job.update(status="partial" if any(metrics["truncated"].values()) else "completed",
-                                   metrics=metrics)
+                        job["metrics"] = metrics
+                        should_convert = True
                     else:
                         message = f"生成进程退出（代码{proc.returncode}）。"
                         if (output / "failure.json").exists():
                             failure = json.loads((output / "failure.json").read_text())
                             message += failure.get("message", "")[:600]
                         job.update(status="failed", error=message + " 已保留阶段结果；请根据错误调整设置后重试。")
+            if should_convert:
+                try:
+                    storage = convert(output, delete_source=True)
+                    with LOCK: job["storage"] = storage
+                except Exception as exc:
+                    with LOCK: job["storage_warning"] = "MP3 转码失败，保留 FLAC：" + str(exc)[:300]
+                with LOCK:
+                    job["status"] = "partial" if any(metrics["truncated"].values()) else "completed"
+            with LOCK:
                 job.update(finished_at=time.time(), exit_code=proc.returncode)
                 persist(job)
     except Exception as exc:
@@ -171,6 +184,7 @@ def run_job(job):
 
 def public(job):
     result = dict(job)
+    result["progress"] = read_progress(job, DATA / job["id"])
     output = DATA / job["id"] / "output"
     result["elapsed_seconds"] = round((job.get("finished_at") or time.time()) - job.get("started_at", job["created_at"]))
     result["stage"] = "准备模型"
@@ -196,7 +210,9 @@ def public(job):
     except OSError:
         result["native_progress"] = ""
     if job["status"] in {"completed", "partial"}:
-        result["audio_url"] = f"/media/{job['id']}/audio.flac"
+        audio = preferred_audio(output)
+        result["audio_url"] = f"/media/{job['id']}/{audio.name}" if audio else None
+        result["download_url"] = f"/download/{job['id']}/{quote(audio_filename(job, audio.suffix), safe='')}" if audio else None
         result["score_url"] = f"/media/{job['id']}/score.abc" if (output / "score.abc").exists() else None
     return result
 
@@ -215,7 +231,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(raw)
 
-    def file(self, p, content_type=None):
+    def file(self, p, content_type=None, filename=None, attachment=False):
         if not p.is_file():
             return self.reply(404, {"error": "文件尚未生成。"})
         size = p.stat().st_size
@@ -234,6 +250,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", content_type or mimetypes.guess_type(p.name)[0] or "application/octet-stream")
         self.send_header("Content-Length", str(end - start + 1))
         self.send_header("Accept-Ranges", "bytes")
+        if filename:
+            disposition = "attachment" if attachment else "inline"
+            fallback = "Rei-song" + p.suffix
+            self.send_header("Content-Disposition", f"{disposition}; filename=\"{fallback}\"; filename*=UTF-8''{quote(filename, safe='')}")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Cache-Control", "no-store")
         self.send_header("Content-Security-Policy", "default-src 'self'; style-src 'self'; script-src 'self'; media-src 'self'; frame-ancestors 'none'")
@@ -254,16 +274,32 @@ class Handler(BaseHTTPRequestHandler):
         if not self.permitted_host():
             return self.reply(403, {"error": "仅允许本机访问。"})
         path = urlparse(self.path).path
+        if path in ("/library", "/library.css", "/library.js"):
+            return self.file(ROOT / "studio-ui" / ("library.html" if path == "/library" else path[1:]))
+        if path == "/api/library":
+            from nightly.library import catalog
+            with LOCK:
+                return self.reply(200, catalog(ROOT, DATA, JOBS))
         if path in ("/", "/studio.css", "/studio.js"):
             return self.file(ROOT / "studio-ui" / ({"": "index.html", "/": "index.html"}.get(path, path[1:])))
         if path == "/api/state":
+            collection = read_state(DATA)
             with LOCK:
                 return self.reply(200, {"token": TOKEN, "active": ACTIVE, "external_busy": external_busy(),
                                        "limits": {"lyrics":4000,"style":1000,"max_audio_seconds":360},
-                                       "jobs": [public(j) for j in sorted(JOBS.values(), key=lambda j: j["created_at"], reverse=True)][:40]})
-        m = re.fullmatch(r"/media/([a-f0-9]{16})/(audio\.flac|score\.abc)", path)
-        if m and m[1] in JOBS and JOBS[m[1]]["status"] in {"completed", "partial"}:
-            return self.file(DATA / m[1] / "output" / m[2], "audio/flac" if m[2] == "audio.flac" else "text/plain; charset=utf-8")
+                                       "jobs": [public(j) for j in sorted(JOBS.values(), key=lambda j: j["created_at"], reverse=True) if not is_deleted(collection, j)][:40]})
+        m = re.fullmatch(r"/download/([a-f0-9]{16})/[^/]+", path)
+        if m and m[1] in JOBS and not is_deleted(read_state(DATA), JOBS[m[1]]) and JOBS[m[1]]["status"] in {"completed", "partial"}:
+            audio = preferred_audio(DATA / m[1] / "output")
+            if audio is None: return self.reply(404, {"error": "音频文件不存在。"})
+            return self.file(audio, "audio/mpeg" if audio.suffix == ".mp3" else "audio/flac",
+                             filename=audio_filename(JOBS[m[1]], audio.suffix), attachment=True)
+        m = re.fullmatch(r"/media/([a-f0-9]{16})/(audio\.flac|audio\.mp3|score\.abc)", path)
+        if m and m[1] in JOBS and not is_deleted(read_state(DATA), JOBS[m[1]]) and JOBS[m[1]]["status"] in {"completed", "partial"}:
+            return self.file(DATA / m[1] / "output" / m[2], "audio/mpeg" if m[2] == "audio.mp3" else "audio/flac" if m[2] == "audio.flac" else "text/plain; charset=utf-8", filename=audio_filename(JOBS[m[1]], Path(m[2]).suffix) if m[2].startswith("audio.") else None)
+        m = re.fullmatch(r"/archive/(outputs|public)/([a-zA-Z0-9_-]+)/(audio\.flac|audio\.mp3)", path)
+        if m:
+            return self.file(ROOT / m[1] / m[2] / m[3], "audio/mpeg" if m[3] == "audio.mp3" else "audio/flac")
         return self.reply(404, {"error": "入口不存在。"})
 
     def do_POST(self):
@@ -277,14 +313,37 @@ class Handler(BaseHTTPRequestHandler):
             if not 0 < size <= 32768:
                 raise ValueError("请求大小不符合要求。")
             body = json.loads(self.rfile.read(size))
+            if not isinstance(body, dict):raise ValueError("输入必须是对象。")
             path = urlparse(self.path).path
+            mutation = re.fullmatch(r"/api/library/tracks/([a-zA-Z0-9_-]+)/(favorite|delete)", path)
+            if mutation:
+                with LOCK:
+                    if mutation[2] == 'favorite':
+                        result = favorite(ROOT, DATA, JOBS, mutation[1], body.get('favorite'))
+                    else:
+                        result = delete_track(ROOT, DATA, JOBS, mutation[1], body.get('confirm_title'))
+                return self.reply(200, result)
             if path == "/api/jobs":
                 req = validate(body)
                 options = validate_options(body)
+                from nightly.library import validate_metadata
+                metadata = validate_metadata(body.get("metadata", {}))
+                client_key = body.get("client_key")
+                if client_key is not None and (not isinstance(client_key, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{1,120}", client_key)):
+                    raise ValueError("无效的批次标识。")
                 user_style = req["style"]
                 if options["target_seconds"]:
                     req["style"] += f", complete song approximately {options['target_seconds']} seconds, continuous musical development, recurring chorus melody, natural resolved ending"
                 with LOCK:
+                    if deleted_request(read_state(DATA), client_key, metadata):
+                        return self.reply(410, {"error":"此歌曲已由你永久删除，不会重新生成。", "status":"deleted"})
+                    if client_key:
+                        existing = next((j for j in JOBS.values() if j.get("client_key") == client_key), None)
+                        if existing:
+                            if (any(existing["request"].get(k) != req.get(k) for k in ("lyrics", "cot", "seed"))
+                                    or existing["user_style"] != user_style or existing["options"] != options):
+                                return self.reply(409, {"error": "该批次标识已对应其他输入。"})
+                            return self.reply(200, {"job": public(existing)})
                     if ACTIVE or external_busy():
                         return self.reply(409, {"error": "已有一首正在生成，请等待或先取消。"})
                     job_id = secrets.token_hex(8)
@@ -292,7 +351,7 @@ class Handler(BaseHTTPRequestHandler):
                     folder.mkdir()
                     req["id"] = job_id
                     (folder / "input.json").write_text(json.dumps(req, ensure_ascii=False, indent=2))
-                    job = dict(id=job_id, status="queued", created_at=time.time(), request=req, options=options, user_style=user_style)
+                    job = dict(id=job_id, status="queued", created_at=time.time(), request=req, options=options, user_style=user_style, metadata=metadata, client_key=client_key)
                     JOBS[job_id] = job
                     ACTIVE = job_id
                     persist(job)
@@ -309,6 +368,10 @@ class Handler(BaseHTTPRequestHandler):
                         persist(job)
                     return self.reply(200, {"job": public(job)})
             return self.reply(404, {"error": "入口不存在。"})
+        except CollectionError as exc:
+            return self.reply(exc.status, {"error": str(exc)})
+        except OSError:
+            return self.reply(500, {"error":"本地文件操作未完成，请检查磁盘权限后重试。删除记录已保留。"})
         except (ValueError, TypeError, UnicodeError) as exc:
             return self.reply(400, {"error": str(exc)})
 
@@ -331,6 +394,12 @@ def stop(signum, frame):
     raise SystemExit(0)
 
 
+class StudioHTTPServer(ThreadingHTTPServer):
+    # Browsers reconnect several resources together, especially after wake-up.
+    # The Python 3.11 default backlog of five drops these small local bursts.
+    request_queue_size = 64
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8766)
@@ -338,4 +407,4 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, stop)
     signal.signal(signal.SIGINT, stop)
     print(f"YuE2 Studio http://127.0.0.1:{args.port}/", flush=True)
-    ThreadingHTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
+    StudioHTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
