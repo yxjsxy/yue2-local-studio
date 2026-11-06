@@ -4,7 +4,7 @@
 
 本项目提供中文网页界面、任务管理、模型下载校验和 MPS 适配，不是 YuE2 官方模型仓库。安装与模型下载完成后，歌曲生成在本机运行，不需要云端 API 密钥。
 
-新机部署见 [Mac Studio 迁移说明](MAC_STUDIO.md)。歌曲库入口为 `/library`；每天八首工作流见 [nightly/AUTOMATION.md](nightly/AUTOMATION.md)。
+新机部署见 [Mac Studio 迁移说明](MAC_STUDIO.md)。歌曲库入口为 `/library`；WorkBuddy 定时任务使用的[任务指令](nightly/WORKBUDDY_TASK.md)使用仓库内的[写词 skill](skills/cn-lyric-writer/SKILL.md)。八首工作流见 [nightly/AUTOMATION.md](nightly/AUTOMATION.md)。
 
 ## 功能
 

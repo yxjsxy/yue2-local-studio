@@ -1,7 +1,9 @@
-# 歌词静态检查器
+# 中文写词 skill
 
-这里保存夜间队列所需的个人歌词检查程序及其字符/读音表，用于新机器独立运行验证步骤。它不是自动作词模型，也不包含个人历史歌词和风格指纹。
+WorkBuddy 从 [SKILL.md](SKILL.md) 开始，按其中的步骤写词、审稿，再用随仓库提供的脚本检查韵脚和读音。
 
-运行：`python scripts/check_lyrics.py 歌词文件.txt`。
+- [风格指纹](references/style-fingerprints.md) 提供曲风分析和创作参考。
+- [样章与技法](references/worked-examples.md) 说明如何修改意象、段落和韵脚。
+- 从仓库根目录运行 `.venv/bin/python skills/cn-lyric-writer/scripts/check_lyrics.py 歌词文件.txt` 可检查单首文本。夜间批次使用 [完整清单校验](../../nightly/AUTOMATION.md)。
 
-完整创作 skill 如另行安装，可使用 `YUE2_LYRIC_SKILL` 指定它的目录。静态检查结果不能代替歌曲实际听验。
+夜间程序默认使用此目录及其字表。如需自定义检查器，可显式设置 `YUE2_LYRIC_SKILL`。

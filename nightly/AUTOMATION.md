@@ -4,9 +4,9 @@
 
 项目绝对目录：`<项目目录>`。
 Python：项目 `.venv/bin/python`。服务：`http://127.0.0.1:8766/library`。
-歌词 skill：`<你安装的 cn-lyric-writer skill>/SKILL.md`。
+歌词 skill：`skills/cn-lyric-writer/SKILL.md`。
 
-## 每晚只让 GPT 做创作和必要修正
+## WorkBuddy 每晚写词与审稿
 
 1. 用 `datetime.now(ZoneInfo('Asia/Shanghai'))` 获取日期；检查 `nightly-data/YYYY-MM-DD/manifest.json`。已有清单则不再写词，直接验证并恢复队列。已完成的同日批次退出，不重复运行。查看前一批 state.json，若失败只报告真实错误；不要无限重试。
 2. 新批次阅读指定 skill 及其风格指纹。仅从近 7 天 manifest 提取标题和一句主题以避重复，不把全部历史歌词送进上下文。不浏览网络、不读模型源码、不下载权重。一次集中创作 8 首，固定为 folk/jazz/rap/pop × male/female，各组合恰好一首。8 首必须不同歌词、主题和标题，不能只改男女声提示词。
@@ -17,8 +17,8 @@ Python：项目 `.venv/bin/python`。服务：`http://127.0.0.1:8766/library`。
 ```json
 {
   "batch": "YYYY-MM-DD",
-  "lyric_author": "GPT in Codex",
-  "skill": "<你安装的 cn-lyric-writer skill>/SKILL.md",
+  "lyric_author": "WorkBuddy（模型未知）",
+  "skill": "skills/cn-lyric-writer/SKILL.md",
   "songs": [
     {
       "slot": "folk-male", "genre": "folk", "voice": "male",
@@ -47,7 +47,7 @@ Python：项目 `.venv/bin/python`。服务：`http://127.0.0.1:8766/library`。
 .venv/bin/python nightly/pipeline.py start --manifest nightly-data/YYYY-MM-DD/manifest.json
 ```
 
-启动几秒后只检查一次 state.json/worker.log，确认 worker 已开始或同批次已运行，随后结束代理运行。不要为了音频推理长时间占用 GPT，不每隔几十秒让代理读日志。后台 Python 会串行提交、等待、重试、更新合集与 REPORT.md。正常运行保持安静，失败才提示用户。下一次排程可读前一批完成摘要。
+启动几秒后只检查一次 state.json/worker.log，确认 worker 已开始或同批次已运行，随后结束代理运行。不要为了音频推理长时间占用 WorkBuddy 的模型，不每隔几十秒让代理读日志。后台 Python 会串行提交、等待、重试、更新合集与 REPORT.md。正常运行保持安静，失败才提示用户。下一次排程可读前一批完成摘要。
 
 `start` 现在后台启动的是 `supervise` 守护：它按轮调用 `run`，一轮异常退出不会让整批停在半路；凭 client_key 幂等，重复运行只补跑未完成的歌曲，不重跑已完成的成品。前一批未完成且 worker 已退出时，直接重新 `start` 同一清单即可续跑，不改动清单。
 
@@ -65,15 +65,15 @@ Python：项目 `.venv/bin/python`。服务：`http://127.0.0.1:8766/library`。
 - 单批停止：创建该批目录的 `STOP` 文件，队列会取消当前任务并停止后续提交；恢复时经用户意图确认移除 STOP，再运行 start。
 - 服务启动命令：`.venv/bin/python studio_ctl.py start`。不要重启仍在生成歌曲的服务。
 
-没有外部 GPT API 调用和 API Key 依赖；GPT 创作使用本次 Codex 定时任务的模型额度，YuE2 音频推理全本地。不要将 GPT 部分描述为离线或零 token。
+写词使用 WorkBuddy 当前选择的模型。已知模型名时填入 lyric_author，无法确认时填“WorkBuddy（模型未知）”。YuE2 在本机生成音频。
 
 ## 音频保存格式
 
-个人播放器使用 320 kbps MP3。YuE2 原生生成 FLAC 后，由服务调用本地 FFmpeg 转码；完整解码、时长、采样率、声道和哈希校验通过后，才删除原 FLAC。转码失败必须保留原件并报告，不能重新跑模型冒充重试转码。所有后续成品与历史成品共用同一 MP3 播放列表和下载入口。转码不调用 GPT。
+个人播放器使用 320 kbps MP3。YuE2 原生生成 FLAC 后，由服务调用本地 FFmpeg 转码；完整解码、时长、采样率、声道和哈希校验通过后，才删除原 FLAC。转码失败必须保留原件并报告，不能重新跑模型冒充重试转码。所有后续成品与历史成品共用同一 MP3 播放列表和下载入口。转码不调用写词模型。
 
 ## 个人播放器的真实进度
 
-工作台和合集必须显示当前歌曲的具体阶段：模型加载、曲谱生成/完成（直接模式明确跳过）、演唱与编配序列、音频合成的实际 n/N 步、解码的实际 n/N 块、原音频校验、MP3 转码、MP3 完整解码校验、清理原 FLAC、入库完成。进度来源仅为模型原生日志、真实回调和 FFmpeg 的已处理音频时间。没有真实总量时只显示阶段和已完成量；不得把 token 预算或目标歌曲时长充当总进度，不编造整体百分比或剩余时间。MP3 转码进度表示本阶段已处理秒数/原音频总秒数；100% 转码后仍需校验，校验通过才删除 FLAC。后台程序记录进度，前端本地请求刷新，不使用 GPT 轮询。失败显示具体失败阶段并保留原件。不得为部署进度界面中断正在生成的歌曲；静态界面可立即更新，后端等待自然空闲再部署。
+工作台和合集必须显示当前歌曲的具体阶段：模型加载、曲谱生成/完成（直接模式明确跳过）、演唱与编配序列、音频合成的实际 n/N 步、解码的实际 n/N 块、原音频校验、MP3 转码、MP3 完整解码校验、清理原 FLAC、入库完成。进度来源仅为模型原生日志、真实回调和 FFmpeg 的已处理音频时间。没有真实总量时只显示阶段和已完成量；不得把 token 预算或目标歌曲时长充当总进度，不编造整体百分比或剩余时间。MP3 转码进度表示本阶段已处理秒数/原音频总秒数；100% 转码后仍需校验，校验通过才删除 FLAC。后台程序记录进度，前端本地请求刷新，不使用写词模型轮询。失败显示具体失败阶段并保留原件。不得为部署进度界面中断正在生成的歌曲；静态界面可立即更新，后端等待自然空闲再部署。
 
 下载命名统一为 `小Rei-歌名.mp3`，工作台与合集使用同一歌曲标题，不用任务 ID 命名。尚未迁移的原音频保留真实扩展名，不能把 FLAC 内容仅改名为 MP3。
 
